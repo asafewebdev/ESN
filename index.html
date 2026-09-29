@@ -78,6 +78,10 @@
 
   html {
     scroll-behavior: smooth;
+    /* Safety net, if anything on the page ever ends up wider than the
+       viewport for any reason, it clips here instead of forcing the
+       whole page into horizontal scroll and cutting off content. */
+    overflow-x: hidden;
   }
 
   body {
@@ -88,6 +92,7 @@
     font-size: 16px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   img { max-width: 100%; display: block; }
@@ -191,6 +196,7 @@
   .site-nav {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: var(--space-5);
   }
 
@@ -205,6 +211,10 @@
     white-space: nowrap;
     cursor: pointer;
     transition: color 250ms ease;
+    /* Safety net against forced horizontal overflow on very narrow
+       screens, harmless alongside white-space: nowrap above. */
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   /* Animated fill underline, shared by all three header nav links
@@ -261,7 +271,17 @@
   }
 
   @media (max-width: 480px) {
-    .site-nav { gap: var(--space-3); }
+    /* Below this width the logo plus Vagas de Emprego plus the CTA
+       button don't fit on one line. header-row already wraps site-nav
+       onto its own row, this makes that wrapped row take the full
+       width and left-align (matching the logo above it) instead of
+       shrinking to content width, which read as broken/off-center. */
+    .header-row { row-gap: var(--space-3); }
+    .site-nav {
+      width: 100%;
+      justify-content: flex-start;
+      gap: var(--space-3) var(--space-4);
+    }
     .nav-link { font-size: 12px; }
     .nav-cta {
       padding: 6px var(--space-3);
@@ -320,6 +340,9 @@
        of the hero where the scrim is almost gone and the photo shows
        through nearly at full brightness. */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 4px 14px rgba(0, 0, 0, 0.75);
+    /* Safety net against forced horizontal overflow on very narrow screens. */
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .headline-highlight {

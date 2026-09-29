@@ -683,6 +683,45 @@
     color: var(--text-faint);
   }
 
+  /* ============================================
+     PHOTO FRAME
+     Shared treatment for every real photograph on the page (Quem Somos
+     aerial, card 02, card 03), the card's own dark background shows as
+     a mat around the photo, a unified color grade ties three photos
+     shot in different lighting into one visual system, and a caption
+     strip sits below. Card 01's video facade keeps its existing
+     .media-placeholder treatment untouched, it's intentionally not
+     part of this system.
+     ============================================ */
+  .photo-frame {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    padding: 11px;
+  }
+
+  .photo-frame img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 5px;
+    /* Unified color grade: desaturated and slightly darkened so the
+       aerial photo's warm tones, the tube bundles' cool grays, and the
+       stacked stock's neutral concrete all read as one muted, serious
+       system instead of three different original lighting casts.
+       sepia+hue-rotate nudges the warmth toward the site's brand red
+       rather than a generic yellow-brown. */
+    filter: saturate(0.82) contrast(1.08) brightness(0.96) sepia(0.14) hue-rotate(-8deg);
+  }
+
+  .photo-caption {
+    margin: var(--space-2) 0 0;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
   .video-play-btn {
     width: 72px;
     height: 72px;
@@ -1357,8 +1396,10 @@
           <p class="highlight-line">Mais que fornecedores de andaimes. Parceiros da sua operação.</p>
           <p class="section-body">A ESN nasceu de uma certeza, em uma parada de manutenção, o andaime é o coração de tudo. Se ele atrasa, tudo atrasa. Se ele falha, tudo para.</p>
         </div>
-        <div class="media-placeholder is-filled reveal">
+        <div class="photo-frame reveal">
           <img src="quem-somos.jpg" alt="Vista aérea de estrutura de andaime multidirecional montada em operação industrial, com equipe trabalhando nos níveis." loading="lazy">
+          <!-- TODO: caption text can be adjusted once real captions are confirmed -->
+          <p class="photo-caption">Operação em campo</p>
         </div>
       </div>
 
@@ -1465,8 +1506,10 @@
           </ul>
           <p class="card-result"><span class="card-result-label">Resultado.</span> Material chega pronto pra sua equipe montar sem susto.</p>
         </div>
-        <div class="card-media media-placeholder is-filled">
+        <div class="card-media photo-frame">
           <img src="card-material-certificado.jpg" alt="Feixes de tubo de andaime empilhados no pátio, com etiquetas coloridas de identificação nas conexões, empilhadeira ao fundo." loading="lazy">
+          <!-- TODO: caption text can be adjusted once real captions are confirmed -->
+          <p class="photo-caption">Pátio ESN</p>
         </div>
       </article>
 
@@ -1496,8 +1539,10 @@
             </li>
           </ul>
         </div>
-        <div class="card-media media-placeholder is-filled">
+        <div class="card-media photo-frame">
           <img src="card-estoque-proprio.jpg" alt="Andaimes multidirecionais empilhados e organizados no pátio da ESN Industrial, estoque próprio." loading="lazy">
+          <!-- TODO: caption text can be adjusted once real captions are confirmed -->
+          <p class="photo-caption">Estoque próprio</p>
         </div>
       </article>
     </div>

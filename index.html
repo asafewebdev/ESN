@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Locação de Andaime Multidirecional | ESN Industrial</title>
+<meta name="description" content="Locação de andaime multidirecional em todo o Brasil. Estoque próprio de 200 toneladas, sem intermediário. Sede em Deodápolis, MS. Solicite um orçamento.">
+
+<!-- Local business structured data, matches the Google Meu Negócio listing exactly.
+     TODO: replace "telephone": "" with the real sales phone number (E.164 format, e.g. +5567900000000)
+     TODO: replace "url" with the live domain once the page is published -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ESN Industrial",
+  "image": "",
+  "description": "Locação de andaime multidirecional com estoque próprio e atendimento em todo o território nacional.",
+  "url": "https://www.esnindustrial.com.br/",
+  "telephone": "",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Avenida Genário da Costa Matos, 1515",
+    "addressLocality": "Deodápolis",
+    "addressRegion": "MS",
+    "postalCode": "79792-100",
+    "addressCountry": "BR"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Brasil"
+  }
+}
+</script>
+
+<!-- Google Fonts: Oswald (headline) + Inter (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================
+     DESIGN TOKENS
+     Red sampled directly from the real ESN logo, pixel-picked at
+     RGB(217, 51, 38) = #D93326. Replaces the earlier #E4002B placeholder.
+     ============================================ */
+  :root {
+    --bg: #0A0A0A;
+    --bg-raised: #141414;
+    --bg-raised-2: #1A1A1A;
+    --border: #2A2A2A;
+    --red: #D93326;
+    --red-dim: #821F17;
+    --red-text: #E3665C; /* lightened red, for small red text on dark bg only, keeps 4.5:1+ contrast; buttons keep --red */
+    --white: #FFFFFF;
+    --text: #F2F2F2;
+    --text-muted: #9A9A9A;
+    --text-faint: #808080; /* raised from #6B6B6B, that value read at ~3.7:1 on #0A0A0A, below WCAG AA 4.5:1 */
+
+    --font-head: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+
+    --container: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  a { color: inherit; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ============================================
+     SHARED RED CTA BUTTON STYLING
+     Covers every "Solicitar Orçamento" button on the page (hero,
+     header, closing CTA card), one rule so all three stay in sync.
+     The Vagas de Emprego link (.nav-link, .rh-link) is intentionally
+     excluded, it stays plain underlined text, no button treatment.
+     ============================================ */
+  .btn-primary,
+  .nav-cta {
+    border-radius: 999px;
+  }
+
+  .btn-primary:hover,
+  .nav-cta:hover {
+    box-shadow: 0 0 32px 2px rgba(217, 51, 38, 0.45);
+  }
+
+  /* ============================================
+     HEADER
+     ============================================ */
+  header.site-header {
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-4) 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    /* Same photo as .hero, background-attachment: fixed on both means they
+       share one continuous image plane instead of each showing its own
+       independent crop, no seam where the header ends and the hero
+       begins. Flat, uniform tint across the whole bar now, not a
+       left-to-right gradient, the dark patch on the left was removed. */
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
+      url('layer-do-brasil%20%281%29.webp');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: var(--bg);
+  }
+
+  /* Solid overlay that fades in once the page scrolls past the hero photo,
+     and fades back out at the very top, so the header only shows the
+     photo through it while the hero itself is in view. */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg);
+    opacity: 0;
+    transition: opacity 250ms ease;
+    pointer-events: none;
+  }
+
+  .site-header.is-scrolled::before {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header::before {
+      transition: none;
+    }
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+    column-gap: var(--space-4);
+  }
+
+  .brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 250ms ease;
+  }
+
+  /* Animated fill underline, shared by all three header nav links
+     (Quem Somos, Garantia ESN, Vagas de Emprego), grows left-to-right on
+     hover and shrinks back the same way on mouse leave, no instant snap. */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: var(--red);
+    transition: width 280ms ease;
+  }
+
+  .nav-link:hover { color: var(--red); }
+  .nav-link:hover::after { width: 100%; }
+
+  .nav-link:focus-visible {
+    outline: 1px solid var(--text-muted);
+    outline-offset: 4px;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--red);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    padding: var(--space-2) var(--space-5);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .nav-cta:hover { background: #B82B20; }
+  .nav-cta:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 3px;
+  }
+
+  /* Quem Somos and Garantia ESN links crowd the header at tablet width,
+     drop them first. Vagas de Emprego and the CTA button stay, both carry
+     a direct conversion or lead-qualification function and most of this
+     campaign's traffic is mobile. */
+  @media (max-width: 820px) {
+    .nav-link--section { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .site-nav { gap: var(--space-3); }
+    .nav-link { font-size: 12px; }
+    .nav-cta {
+      padding: 6px var(--space-3);
+      font-size: 12px;
+    }
+  }
+
+  /* logo.png is the real ESN lockup (icon + wordmark), exported with a
+     proper alpha channel this time, so it can sit directly on the dark
+     header instead of the cropped-icon-plus-CSS-text workaround used
+     before with the old opaque logo.webp. */
+  .brand-logo {
+    display: block;
+    height: 38px;
+    width: auto;
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    padding: var(--space-8) 0 var(--space-7);
+    /* Top-to-bottom gradient, transparent at the top so the photo reads
+       clean right under the header, darkening going down, strongest by
+       the CTA/badges row at the bottom. */
+    background-image:
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.85) 100%),
+      url('layer-do-brasil%20%281%29.webp');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed; /* same as the header, one continuous image plane, no seam at the boundary */
+    background-repeat: no-repeat;
+    background-color: var(--bg);
+  }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    /* Reduced from clamp(2.2rem, 8vw, 4.2rem) to offset the taller
+       line-height below, so the headline doesn't grow noticeably taller. */
+    font-size: clamp(2rem, 7vw, 3.8rem);
+    /* Was 1.04, too tight for condensed uppercase Portuguese text, the
+       tilde in "Locação" and similar diacritics were clipping into the
+       line above on wrap. */
+    line-height: 1.25;
+    letter-spacing: 0.005em;
+    margin: 0 0 var(--space-4);
+    color: var(--white);
+    /* Two layers: a tight near-black contact shadow for a subtle outline,
+       plus a softer wider one for ambient separation. Strengthened after
+       the overlay became a gradient, the headline now sits near the top
+       of the hero where the scrim is almost gone and the photo shows
+       through nearly at full brightness. */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 4px 14px rgba(0, 0, 0, 0.75);
+  }
+
+  .headline-highlight {
+    color: var(--red);
+    /* Red on a busy, now nearly unfiltered photo needs more separation
+       than white does, so this runs darker than the white text's shadow
+       above rather than raising the overlay opacity back up. */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.92), 0 4px 14px rgba(0, 0, 0, 0.85);
+  }
+
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    color: var(--text-muted);
+    font-weight: 400;
+    margin: 0 0 var(--space-6);
+    max-width: 42ch;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 3px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  /* CTA block */
+  .cta-block {
+    margin-bottom: var(--space-7);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    background: var(--red);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: 0.01em;
+    padding: var(--space-4) var(--space-6);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    min-height: 56px;
+    width: 100%;
+    max-width: 420px;
+    transition: background-color 220ms ease, box-shadow 220ms ease, transform 150ms ease;
+  }
+
+  .btn-primary:hover { background: #B82B20; }
+  .btn-primary:active { transform: scale(0.99); }
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 3px;
+  }
+
+  /* Secondary link: deliberately muted, no button chrome.
+     Kept visually subordinate because past campaigns for this
+     client pulled in job applicants instead of rental leads
+     when this link looked like a second CTA. */
+  .rh-link {
+    display: inline-block;
+    margin-top: var(--space-4);
+    padding: var(--space-2) 0;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--text-faint);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    max-width: 420px;
+  }
+
+  .rh-link:hover { color: var(--text-muted); }
+  .rh-link:focus-visible {
+    outline: 1px solid var(--text-muted);
+    outline-offset: 4px;
+  }
+
+  /* Stat badges (hero) */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .badge {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .badge-num {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-size: 18px;
+    color: var(--white);
+    white-space: nowrap;
+  }
+
+  .badge-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* ============================================
+     STAT ITEM LAYOUT
+     Reused by the feature-stats grid inside Quem Somos.
+     ============================================ */
+  .stat-item {
+    text-align: left;
+    border-left: 2px solid var(--red);
+    padding-left: var(--space-4);
+  }
+
+  .stat-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ============================================
+     SHARED SECTION COMPONENTS
+     Used by Quem Somos and 3 Garantias.
+     ============================================ */
+  .pill-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red-text);
+    border: 1px solid var(--red-dim);
+    background: rgba(217, 51, 38, 0.08);
+    padding: var(--space-2) var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .section-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+    line-height: 1.12;
+    color: var(--white);
+    margin: 0 0 var(--space-3);
+    max-width: 22ch;
+  }
+
+  .highlight-line {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--red-text);
+    margin: 0 0 var(--space-4);
+  }
+
+  .section-body {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  /* ============================================
+     CLIENT TRUST BAR
+     ============================================ */
+  .trust-bar {
+    border-top: 1px solid var(--border);
+    padding: var(--space-6) 0;
+  }
+
+  .trust-bar-label {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-faint);
+    margin: 0 0 var(--space-5);
+  }
+
+  .trust-marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .trust-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .trust-group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: var(--space-8);
+    padding-right: var(--space-8);
+  }
+
+  .trust-logo {
+    color: var(--text-faint);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  /* Loosely distinct type treatments per name so the row reads as
+     different brand marks, not one style repeated five times. */
+  .trust-logo--atvos {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .trust-logo--corbion {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 19px;
+    letter-spacing: 0.04em;
+  }
+
+  .trust-logo--raizen {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.1em;
+  }
+
+  .trust-logo--adecoagro {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .trust-logo--bunge {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 640px) {
+    .trust-group {
+      gap: var(--space-5);
+      padding-right: var(--space-5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trust-track {
+      transform: none !important;
+      transition: none;
+    }
+  }
+
+  /* ============================================
+     QUEM SOMOS
+     ============================================ */
+  .quem-somos {
+    border-top: 1px solid var(--border);
+    padding: var(--space-8) 0;
+    scroll-margin-top: 84px; /* offsets the sticky header when jumped to via nav anchor */
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (min-width: 860px) {
+    .two-col {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+      align-items: center;
+    }
+  }
+
+  .media-placeholder {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    background: var(--bg-raised);
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    text-align: center;
+  }
+
+  .media-placeholder--video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .media-placeholder.is-filled {
+    border-style: solid;
+    padding: 0;
+  }
+
+  .media-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-placeholder-label {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .video-play-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--red);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 220ms ease, transform 150ms ease;
+  }
+
+  .video-play-btn:hover {
+    background: #B82B20;
+    transform: scale(1.06);
+  }
+
+  .video-play-btn:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 4px;
+  }
+
+  .video-play-btn svg {
+    width: 26px;
+    height: 26px;
+    color: var(--white);
+    margin-left: 4px; /* optical centering, a play triangle reads left-heavy otherwise */
+  }
+
+  .feature-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 640px) {
+    .feature-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-7) var(--space-5);
+    }
+  }
+
+  @media (min-width: 980px) {
+    .feature-stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .feature-stat-num {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(2rem, 5vw, 2.6rem);
+    color: var(--red);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  /* ============================================
+     3 GARANTIAS
+     ============================================ */
+  .garantias {
+    border-top: 1px solid var(--border);
+    padding: var(--space-8) 0;
+    scroll-margin-top: 84px; /* offsets the sticky header when jumped to via nav anchor */
+  }
+
+  .garantias-header {
+    margin-bottom: var(--space-7);
+  }
+
+  .guarantee-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .guarantee-card:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  @media (min-width: 860px) {
+    .guarantee-card {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+      align-items: center;
+      padding: var(--space-7) 0;
+    }
+
+    .guarantee-card:nth-of-type(even) .card-content { order: 2; }
+    .guarantee-card:nth-of-type(even) .card-media { order: 1; }
+  }
+
+  .pill-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--red-dim);
+    border-radius: 50%;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+    color: var(--red-text);
+    margin-bottom: var(--space-4);
+  }
+
+  .card-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    color: var(--white);
+    margin: 0 0 var(--space-2);
+  }
+
+  .card-body {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-4);
+    max-width: 52ch;
+  }
+
+  .checklist {
+    list-style: none;
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .check-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--red-text);
+  }
+
+  .card-result {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+    max-width: 52ch;
+  }
+
+  .card-result-label {
+    color: var(--red-text);
+  }
+
+  /* ============================================
+     FINAL CTA
+     ============================================ */
+  .final-cta {
+    padding: var(--space-8) 0;
+  }
+
+  .final-cta-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: var(--space-8) var(--space-5);
+    text-align: center;
+  }
+
+  /* Ambient glow only, not a color block, kept low-opacity and faded
+     to transparent well before it reaches the card edges. */
+  .final-cta-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140%;
+    height: 340px;
+    background: radial-gradient(ellipse at top, rgba(217, 51, 38, 0.16) 0%, rgba(217, 51, 38, 0) 70%);
+    pointer-events: none;
+  }
+
+  .final-cta-content {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .final-cta-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    line-height: 1.25; /* same fix as the hero H1, keeps ç/ã from overlapping across wrapped lines */
+    color: var(--white);
+    margin: 0 0 var(--space-4);
+  }
+
+  .final-cta-body {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto var(--space-6);
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  footer.site-footer {
+    padding: var(--space-7) 0 var(--space-6);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  @media (min-width: 780px) {
+    .footer-top {
+      grid-template-columns: 1.3fr 1fr 1fr 1.2fr;
+      gap: var(--space-5);
+    }
+  }
+
+  .footer-logo {
+    display: block;
+    height: 40px;
+    width: auto;
+    margin-bottom: var(--space-3);
+  }
+
+  .footer-address {
+    font-style: normal;
+    font-size: 13px;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+
+  .footer-label {
+    display: block;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red-text);
+    margin-bottom: var(--space-3);
+  }
+
+  .footer-col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+  }
+
+  .footer-col-header .footer-label {
+    margin-bottom: 0;
+  }
+
+  .footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 14px;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .footer-link:hover {
+    color: var(--red-text);
+  }
+
+  .footer-link svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--red-text);
+  }
+
+  .footer-social {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+
+  .footer-social-link:hover {
+    color: var(--red-text);
+    border-color: var(--red-dim);
+  }
+
+  .footer-social-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 0 var(--space-5);
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 780px) {
+    .footer-bottom {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .footer-copyright,
+  .footer-credit {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin: 0;
+  }
+
+  .footer-copyright strong {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .footer-credit a {
+    color: var(--white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 200ms ease;
+  }
+
+  .footer-credit a:hover {
+    color: var(--red-text);
+  }
+
+  /* ============================================
+     RESPONSIVE ADJUSTMENTS
+     ============================================ */
+  @media (max-width: 480px) {
+    .badge-row { flex-direction: column; }
+    .badge { width: 100%; }
+    .btn-primary { max-width: 100%; }
+    .rh-link { max-width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn-primary { transition: none; }
+  }
+
+  /* ============================================
+     SCROLL REVEAL
+     Hero stays out of this, it must render instantly.
+     Elements are visible by default (.reveal alone), the
+     hidden pre-state only applies once JS confirms it can
+     run the reveal, so a JS failure never hides content.
+     ============================================ */
+  html.js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html.js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-stats .stat-item:nth-child(2) { transition-delay: 80ms; }
+  .feature-stats .stat-item:nth-child(3) { transition-delay: 160ms; }
+  .feature-stats .stat-item:nth-child(4) { transition-delay: 240ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js-reveal .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-row">
+    <div class="brand-lockup">
+      <img class="brand-logo" src="logo.png" alt="ESN Industrial, montagens industriais">
+    </div>
+
+    <nav class="site-nav" aria-label="Navegação principal">
+      <!-- Opens WhatsApp directly with the recruiting number and message, same
+           as the secondary link near the hero CTA. Fires no Meta Pixel event,
+           on purpose, so recruiting contacts never count as sales leads. -->
+      <!-- TODO: replace 5500000000001 with the real WhatsApp number for RH / recruiting, must match the number used near the hero CTA -->
+      <a
+        href="#"
+        class="nav-link"
+        id="link-rh-header"
+        data-whatsapp-number="5500000000001"
+        data-whatsapp-text="Olá, estou buscando vaga de montador de andaime."
+      >
+        Vagas de Emprego
+      </a>
+
+      <a href="#quem-somos" class="nav-link nav-link--section">Quem Somos</a>
+      <a href="#garantias" class="nav-link nav-link--section">Garantia ESN</a>
+
+      <!-- Header CTA: wired to the same click handler and the same
+           Meta Pixel OrcamentoClick event as #cta-orcamento in the hero,
+           this is not a second, separate event. -->
+      <!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the hero CTA -->
+      <a
+        href="#"
+        class="nav-cta"
+        id="cta-orcamento-header"
+        data-whatsapp-number="5500000000000"
+        data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+      >
+        Solicitar Orçamento
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="hero">
+    <div class="container">
+      <h1>Locação de Andaime Multidirecional com o <span class="headline-highlight">Melhor Preço do Brasil</span></h1>
+
+      <p class="hero-sub">Sua parada não pode esperar.</p>
+
+      <div class="cta-block">
+        <!-- Primary CTA: fires Meta Pixel event OrcamentoClick, then opens WhatsApp -->
+        <!-- TODO: replace 5500000000000 with the real WhatsApp number (with country code, no symbols) for the sales team -->
+        <a
+          href="#"
+          class="btn-primary"
+          id="cta-orcamento"
+          data-whatsapp-number="5500000000000"
+          data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+        >
+          Solicitar Orçamento
+        </a>
+
+        <!-- Secondary link: no pixel event fires here on purpose.
+             Separate WhatsApp number so recruiting messages never
+             reach the sales line. -->
+        <!-- TODO: replace 5500000000001 with the real WhatsApp number for RH / recruiting -->
+        <a
+          href="#"
+          class="rh-link"
+          id="link-rh"
+          data-whatsapp-number="5500000000001"
+          data-whatsapp-text="Olá, estou buscando vaga de montador de andaime."
+        >
+          Está procurando vaga de montador, fale com o RH aqui.
+        </a>
+      </div>
+
+      <div class="badge-row">
+        <div class="badge">
+          <span class="badge-num">200 t</span>
+          <span class="badge-label">em estoque</span>
+        </div>
+        <div class="badge">
+          <span class="badge-num">Brasil</span>
+          <span class="badge-label">atendimento nacional</span>
+        </div>
+        <div class="badge">
+          <span class="badge-num">100%</span>
+          <span class="badge-label">estoque próprio, sem intermediário</span>
+        </div>
+        <div class="badge">
+          <span class="badge-num">5 mil+</span>
+          <span class="badge-label">projetos atendidos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CLIENT TRUST BAR
+       The visual scrolling row is decorative (the same five names appear
+       twice, back to back, purely so the loop has no seam), so the whole
+       marquee is aria-hidden and a plain sr-only line carries the real
+       content for screen readers instead of announcing the list twice.
+       ============================================ -->
+  <section class="trust-bar">
+    <div class="container">
+      <p class="trust-bar-label">Mais de 500 toneladas de andaime próprio disponível</p>
+      <p class="sr-only">Clientes atendidos: Atvos, Corbion, Raízen, Adecoagro, Bunge.</p>
+
+      <div class="trust-marquee" aria-hidden="true">
+        <div class="trust-track" id="trust-track">
+          <div class="trust-group">
+            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
+            <span class="trust-logo trust-logo--atvos">Atvos</span>
+            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
+            <span class="trust-logo trust-logo--corbion">Corbion</span>
+            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
+            <span class="trust-logo trust-logo--raizen">Raízen</span>
+            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
+            <span class="trust-logo trust-logo--adecoagro">Adecoagro</span>
+            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
+            <span class="trust-logo trust-logo--bunge">Bunge</span>
+          </div>
+          <!-- Exact duplicate of the group above, back to back, this is what
+               makes the loop seamless, the track only has to translate the
+               width of one group before it can reset to 0 unnoticed. -->
+          <div class="trust-group">
+            <span class="trust-logo trust-logo--atvos">Atvos</span>
+            <span class="trust-logo trust-logo--corbion">Corbion</span>
+            <span class="trust-logo trust-logo--raizen">Raízen</span>
+            <span class="trust-logo trust-logo--adecoagro">Adecoagro</span>
+            <span class="trust-logo trust-logo--bunge">Bunge</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       QUEM SOMOS
+       ============================================ -->
+  <section id="quem-somos" class="quem-somos" aria-labelledby="quem-somos-heading">
+    <div class="container">
+      <div class="two-col">
+        <div class="reveal">
+          <span class="pill-tag">Quem somos</span>
+          <h2 id="quem-somos-heading" class="section-title">Somos quem garante que sua parada de manutenção não vai falhar.</h2>
+          <p class="highlight-line">Mais que fornecedores de andaimes. Parceiros da sua operação.</p>
+          <p class="section-body">A ESN nasceu de uma certeza, em uma parada de manutenção, o andaime é o coração de tudo. Se ele atrasa, tudo atrasa. Se ele falha, tudo para.</p>
+        </div>
+        <div class="media-placeholder is-filled reveal">
+          <img src="quem-somos.jpg" alt="Vista aérea de estrutura de andaime multidirecional montada em operação industrial, com equipe trabalhando nos níveis." loading="lazy">
+        </div>
+      </div>
+
+      <div class="feature-stats">
+        <div class="stat-item reveal">
+          <div class="feature-stat-num">500+</div>
+          <div class="stat-desc">toneladas de andaime multidirecional próprio em estoque</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="feature-stat-num">100%</div>
+          <div class="stat-desc">de aprovação em auditorias de segurança</div>
+        </div>
+        <!-- This 70% covers the full parada cycle (mobilization through demobilization),
+             not assembly speed alone. Keep this scope distinct from the 230%
+             assembly-speed figure in Garantias below, they measure different things
+             and are not meant to reconcile numerically. -->
+        <div class="stat-item reveal">
+          <div class="feature-stat-num">70%</div>
+          <div class="stat-desc">de redução no tempo total de parada</div>
+        </div>
+        <div class="stat-item reveal">
+          <div class="feature-stat-num">5.000+</div>
+          <div class="stat-desc">locações entregues em paradas de indústrias de grande porte</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       3 GARANTIAS
+       ============================================ -->
+  <section id="garantias" class="garantias" aria-labelledby="garantias-heading">
+    <div class="container">
+      <div class="garantias-header reveal">
+        <span class="pill-tag">Por que a ESN</span>
+        <h2 id="garantias-heading" class="section-title" style="max-width: 28ch;">3 Garantias que Transformam sua Operação</h2>
+      </div>
+
+      <!-- Card 01 -->
+      <article class="guarantee-card reveal">
+        <div class="card-content">
+          <span class="pill-badge">01</span>
+          <h3 class="card-title">Velocidade Comprovada</h3>
+          <p class="highlight-line">Montagem até 230% mais rápida.</p>
+          <p class="card-body">Comparamos em campo, duas montagens reais, mesmo porte de estrutura, cronômetro rodando na tela. O sistema tradicional levou 1h47. Nosso andaime multidirecional foi montado em 32 minutos, com a mesma equipe.</p>
+          <ul class="checklist">
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Menos tempo de montagem pra sua equipe
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Menor custo de mão de obra contratada
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Parada retomada mais rápido
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Estrutura pronta sem complicação de encaixe
+            </li>
+          </ul>
+          <p class="card-result"><span class="card-result-label">Resultado.</span> Sua equipe monta antes. Sua produção volta antes. Seu custo de mão de obra cai.</p>
+        </div>
+        <!-- Click-to-play facade, the real Vimeo iframe (video 1178541580) is
+             only created on click, so the page never loads the Vimeo player
+             or starts any video traffic on page load, just this lightweight
+             button until someone actually wants to watch. -->
+        <!-- TODO: replace this solid background with an actual static thumbnail image
+             extracted from the video, until then the card's existing dark background
+             is fine as a stand-in. -->
+        <div class="card-media media-placeholder media-placeholder--video is-filled video-facade" id="card01-video-facade">
+          <button type="button" class="video-play-btn" aria-label="Reproduzir vídeo, comparativo de montagem cronometrado">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+      </article>
+
+      <!-- Card 02 -->
+      <article class="guarantee-card reveal">
+        <div class="card-content">
+          <span class="pill-badge">02</span>
+          <h3 class="card-title">Material Certificado, Não Genérico</h3>
+          <p class="highlight-line">Sistema Layher, não gambiarra de terceiro.</p>
+          <p class="card-body">Cada módulo passa por inspeção técnica antes de sair do nosso pátio, identificado e sinalizado. Você aluga sistema Layher original, não andaime genérico remontado.</p>
+          <ul class="checklist">
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Inspeção técnica antes da liberação
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Identificação e rastreabilidade por módulo
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Material dentro do padrão de carga especificado pelo fabricante
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Sem substituição por peça improvisada
+            </li>
+          </ul>
+          <p class="card-result"><span class="card-result-label">Resultado.</span> Material chega pronto pra sua equipe montar sem susto, sem peça faltando, sem gambiarra.</p>
+        </div>
+        <div class="card-media media-placeholder is-filled">
+          <img src="card-material-certificado.jpg" alt="Feixes de tubo de andaime empilhados no pátio, com etiquetas coloridas de identificação nas conexões, empilhadeira ao fundo." loading="lazy">
+        </div>
+      </article>
+
+      <!-- Card 03 -->
+      <article class="guarantee-card reveal">
+        <div class="card-content">
+          <span class="pill-badge">03</span>
+          <h3 class="card-title">Estoque Próprio = Garantia de Entrega</h3>
+          <p class="highlight-line">Material quando você precisa. Não quando conseguimos.</p>
+          <p class="card-body">Temos estoque próprio em volume suficiente para qualquer operação. Não dependemos de terceiros. Não temos desculpas.</p>
+          <ul class="checklist">
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Fornecimento contínuo garantido
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Preço competitivo sem intermediários
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Logística própria e ágil
+            </li>
+            <li class="checklist-item">
+              <svg class="check-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Manutenção padronizada e rigorosa
+            </li>
+          </ul>
+          <p class="card-result"><span class="card-result-label">Resultado.</span> Combinamos segunda, chega segunda, sem "imprevistos".</p>
+        </div>
+        <div class="card-media media-placeholder is-filled">
+          <img src="card-estoque-proprio.jpg" alt="Andaimes multidirecionais empilhados e organizados no pátio da ESN Industrial, estoque próprio." loading="lazy">
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FINAL CTA
+       ============================================ -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="final-cta-card reveal">
+        <div class="final-cta-content">
+          <h2 class="final-cta-title">Sua Parada de Manutenção Não Pode Esperar</h2>
+          <p class="final-cta-body">Não fique na mão de fornecedor sem estoque. A ESN tem 200 toneladas de andaime multidirecional prontas pra locação, com o melhor preço do Brasil.</p>
+
+          <!-- Wired to the same handler and the same Meta Pixel OrcamentoClick
+               event as #cta-orcamento (hero) and #cta-orcamento-header (nav),
+               not a new event, not a new WhatsApp function. -->
+          <!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the hero CTA -->
+          <a
+            href="#"
+            class="btn-primary"
+            id="cta-orcamento-final"
+            data-whatsapp-number="5500000000000"
+            data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+          >
+            Solicitar Orçamento Agora &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col">
+        <img class="footer-logo" src="logo.png" alt="ESN Industrial, montagens industriais">
+        <address class="footer-address">
+          Avenida Genário da Costa Matos, 1515.<br>
+          Deodápolis, Mato Grosso do Sul. CEP 79792-100.
+        </address>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-label">Menu</span>
+        <ul class="footer-links">
+          <li><a href="#quem-somos" class="footer-link">Quem Somos</a></li>
+          <li><a href="#garantias" class="footer-link">Garantia ESN</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-label">Links importantes</span>
+        <ul class="footer-links">
+          <li>
+            <!-- TODO: replace href="#" with the real privacy policy page once available -->
+            <a href="#" class="footer-link">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Política de privacidade
+            </a>
+          </li>
+          <li>
+            <!-- TODO: replace href="#" with the real terms of use page once available -->
+            <a href="#" class="footer-link">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Termos de uso
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-header">
+          <span class="footer-label">Contato</span>
+          <div class="footer-social">
+            <!-- TODO: replace href="#" with the real LinkedIn profile URL once available -->
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M7.5 10v6.5M7.5 7.5v.01M11.5 16.5V10M11.5 12.5c0-1.4 1-2.5 2.5-2.5s2.5 1.1 2.5 2.5v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <!-- TODO: replace href="#" with the real Instagram profile URL once available -->
+            <a href="#" class="footer-social-link" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+        <ul class="footer-links">
+          <li>
+            <!-- Wired to the same handleOrcamentoClick function and the same
+                 Meta Pixel OrcamentoClick event as the other Solicitar
+                 Orçamento buttons, not a new event. -->
+            <!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the other Solicitar Orçamento buttons -->
+            <a
+              href="#"
+              class="footer-link"
+              id="cta-orcamento-footer"
+              data-whatsapp-number="5500000000000"
+              data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 8.7c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.4.2.5.7 1.6.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.2 1.7-.3.8-1.7 1.5-2.4 1.6-.6.1-1.3.1-2.1-.1-.5-.1-1.1-.3-1.9-.7-3.3-1.4-5.4-4.7-5.6-4.9-.2-.3-1.3-1.8-1.3-3.4 0-1.6.9-2.4 1.2-2.7z" fill="currentColor"/></svg>
+              WhatsApp
+            </a>
+          </li>
+          <li>
+            <!-- TODO: confirm this is the real sales email address, or replace it -->
+            <a href="mailto:comercial@esnindustrial.com.br" class="footer-link">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              comercial@esnindustrial.com.br
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright"><strong>© 2026</strong> Todos os direitos reservados.</p>
+      <p class="footer-credit">Desenvolvido por <a href="https://www.instagram.com/r4dar.digital/" target="_blank" rel="noopener noreferrer">R4DAR.DIGITAL</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     META PIXEL BASE SNIPPET
+     TODO: uncomment this block and paste the real Pixel ID
+     in the two spots marked below before going live.
+     ============================================
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'PASTE_PIXEL_ID_HERE'); // TODO: replace with real Pixel ID
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=PASTE_PIXEL_ID_HERE&ev=PageView&noscript=1"
+  />
+</noscript>
+-->
+
+<script>
+  (function () {
+    'use strict';
+
+    function openWhatsApp(number, text) {
+      var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(text);
+      window.open(url, '_blank', 'noopener');
+    }
+
+    // Shared by #cta-orcamento (hero), #cta-orcamento-header (nav),
+    // #cta-orcamento-final (closing CTA card), and #cta-orcamento-footer
+    // (footer), each reads its own data attributes, but they all run
+    // through this one function, so there is only one OrcamentoClick
+    // event definition, not four.
+    function handleOrcamentoClick(event) {
+      event.preventDefault();
+
+      // Fire Meta Pixel custom event before redirecting.
+      // Guarded so the button still works if the Pixel snippet above is commented out.
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', 'OrcamentoClick');
+      }
+
+      openWhatsApp(
+        event.currentTarget.getAttribute('data-whatsapp-number'),
+        event.currentTarget.getAttribute('data-whatsapp-text')
+      );
+    }
+
+    // Shared by #link-rh (hero) and #link-rh-header (nav). Intentionally
+    // fires no pixel event, business-lead tracking should never count
+    // recruiting contacts.
+    function handleRecruitingLinkClick(event) {
+      event.preventDefault();
+      openWhatsApp(
+        event.currentTarget.getAttribute('data-whatsapp-number'),
+        event.currentTarget.getAttribute('data-whatsapp-text')
+      );
+    }
+
+    ['cta-orcamento', 'cta-orcamento-header', 'cta-orcamento-final', 'cta-orcamento-footer'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', handleOrcamentoClick);
+      }
+    });
+
+    ['link-rh', 'link-rh-header'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', handleRecruitingLinkClick);
+      }
+    });
+  })();
+</script>
+
+<!-- Scroll reveal, additive and independent from the CTA/Pixel script above.
+     Progressive enhancement: the .js-reveal class (and the hidden pre-state it
+     enables in CSS) is only added once IntersectionObserver support is confirmed,
+     so content never gets stuck invisible on an older browser or a script error. -->
+<script>
+  (function () {
+    'use strict';
+
+    if (!('IntersectionObserver' in window)) {
+      return;
+    }
+
+    document.documentElement.classList.add('js-reveal');
+
+    var targets = document.querySelectorAll('.reveal');
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    targets.forEach(function (target) {
+      observer.observe(target);
+    });
+  })();
+</script>
+
+<!-- Client trust bar marquee, additive and independent from the scripts above.
+     Driven by requestAnimationFrame rather than a CSS keyframe animation,
+     kept that way even though the hover slowdown was removed, so the
+     seamless-loop wrap logic below doesn't have to change. Constant speed,
+     no hover interaction. -->
+<script>
+  (function () {
+    'use strict';
+
+    var track = document.getElementById('trust-track');
+    if (!track) {
+      return;
+    }
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    var group = track.querySelector('.trust-group');
+    if (!group) {
+      return;
+    }
+
+    var groupWidth = group.getBoundingClientRect().width;
+    var position = 0;
+    var basePxPerSecond = 38.4; // 32 + 20%, constant, no hover slowdown
+    var lastTime = null;
+
+    function tick(now) {
+      if (lastTime === null) {
+        lastTime = now;
+      }
+      var deltaSeconds = (now - lastTime) / 1000;
+      lastTime = now;
+
+      position -= basePxPerSecond * deltaSeconds;
+      if (position <= -groupWidth) {
+        position += groupWidth;
+      }
+
+      track.style.transform = 'translateX(' + position + 'px)';
+      requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+
+    window.addEventListener('resize', function () {
+      groupWidth = group.getBoundingClientRect().width;
+    });
+  })();
+</script>
+
+<!-- Card 01 video facade, additive and independent from the scripts above.
+     The Vimeo iframe is only created here, inside the click handler, so
+     nothing from player.vimeo.com loads or starts playing until someone
+     actually clicks play. -->
+<script>
+  (function () {
+    'use strict';
+
+    var facade = document.getElementById('card01-video-facade');
+    if (!facade) {
+      return;
+    }
+
+    var playBtn = facade.querySelector('.video-play-btn');
+    if (!playBtn) {
+      return;
+    }
+
+    playBtn.addEventListener('click', function () {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://player.vimeo.com/video/1178541580?autoplay=1';
+      iframe.title = 'Vídeo, comparativo de montagem cronometrado';
+      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = '0';
+      iframe.style.display = 'block';
+
+      facade.innerHTML = '';
+      facade.appendChild(iframe);
+    });
+  })();
+</script>
+
+<!-- Header scroll state, additive and independent from the scripts above.
+     Adds .is-scrolled once the page scrolls past the top, fading the
+     header to a solid background, and removes it back at the top, fading
+     back to the photo showing through. -->
+<script>
+  (function () {
+    'use strict';
+
+    var header = document.querySelector('.site-header');
+    if (!header) {
+      return;
+    }
+
+    function updateHeaderState() {
+      if (window.scrollY > 10) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', updateHeaderState, { passive: true });
+    updateHeaderState();
+  })();
+</script>
+
+</body>
+</html>

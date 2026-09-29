@@ -136,22 +136,18 @@
   header.site-header {
     border-bottom: 1px solid var(--border);
     padding: var(--space-4) 0;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 50;
-    /* Same photo as .hero, matching background-position keeps the two
-       lined up at the top so there's no seam at scroll position 0. Flat,
-       uniform tint across the whole bar, not a left-to-right gradient.
-       background-attachment: fixed was removed, it's unreliable on
-       mobile browsers (iOS Safari in particular) and was the cause of
-       the janky hero behavior on scroll. */
-    background-image:
-      linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
-      url('layer-do-brasil%20%281%29.webp');
-    background-size: cover;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-color: var(--bg);
+    /* No background-image of its own anymore. The header floats over the
+       hero (which is the only element carrying the photo) instead of
+       each box independently cropping its own copy of it, that's what
+       caused the seam/duplicated-looking join where the header ended and
+       the hero began. Only a flat tint here, the hero's photo shows
+       through it directly. */
+    background: rgba(0, 0, 0, 0.18);
   }
 
   /* Solid overlay that fades in once the page scrolls past the hero photo,
@@ -287,20 +283,19 @@
      HERO
      ============================================ */
   .hero {
-    padding: var(--space-8) 0 var(--space-7);
+    /* Extra top padding clears the now-fixed header, which floats over
+       the hero instead of pushing it down in normal flow. */
+    padding: calc(var(--space-8) + 72px) 0 var(--space-7);
     /* Top-to-bottom gradient, transparent at the top so the photo reads
        clean right under the header, darkening going down, strongest by
-       the CTA/badges row at the bottom. */
+       the CTA/badges row at the bottom. This is the only element that
+       carries the photo, the header floats transparently over it, no
+       second independently-cropped copy to line up. */
     background-image:
       linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.85) 100%),
       url('layer-do-brasil%20%281%29.webp');
     background-size: cover;
     background-position: center top;
-    /* background-attachment: fixed removed, it's unreliable on mobile
-       browsers (iOS Safari in particular) and made the hero photo scroll
-       janky/incorrectly. Normal scroll attachment, matches the header's
-       background-position so the two still line up with no seam at the
-       top of the page. */
     background-repeat: no-repeat;
     background-color: var(--bg);
   }

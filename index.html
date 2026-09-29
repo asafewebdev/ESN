@@ -243,21 +243,26 @@
 
   @media (max-width: 480px) {
     /* Below this width the logo plus Vagas de Emprego plus the CTA
-       button don't fit on one line. header-row already wraps site-nav
-       onto its own row, this makes that wrapped row take the full
-       width and left-align (matching the logo above it) instead of
-       shrinking to content width, which read as broken/off-center. */
+       button don't fit on one line. The button is pulled out of the
+       flex flow and pinned top-right of the header (site-header is
+       already position: relative, that's its containing block), so it
+       reads as paired with the logo on row one. Vagas de Emprego, the
+       only thing left in site-nav's flow, then takes the full second
+       row on its own, left-aligned under the logo. */
     .header-row { row-gap: var(--space-3); }
+    .nav-cta {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      padding: 6px var(--space-3);
+      font-size: 12px;
+    }
     .site-nav {
       width: 100%;
       justify-content: flex-start;
       gap: var(--space-3) var(--space-4);
     }
     .nav-link { font-size: 12px; }
-    .nav-cta {
-      padding: 6px var(--space-3);
-      font-size: 12px;
-    }
   }
 
   /* logo.png is the real ESN lockup (icon + wordmark), exported with a
@@ -1081,6 +1086,31 @@
     .badge { width: 100%; }
     .btn-primary { max-width: 100%; }
     .rh-link { max-width: 100%; }
+
+    /* Denser vertical rhythm at this width, matching the reference:
+       less air between the header and the headline, and between each
+       hero element, so the whole hero reads tighter on a small phone
+       screen instead of requiring a long scroll to see the CTA. */
+    .hero {
+      /* Header is taller here (two rows: logo, then Vagas de Emprego on
+         its own line below, 101px measured), so the negative margin
+         that tucks the hero's photo underneath it needs a bigger value
+         than the desktop one above. padding-top matches that same
+         101px, so the actual headline text clears the header exactly
+         instead of the two overlapping, only the photo shows through
+         the header, not the wrapped nav row's text. */
+      margin-top: -101px;
+      padding: 101px 0 var(--space-6);
+    }
+    .hero h1 {
+      margin-bottom: var(--space-3);
+    }
+    .hero-sub {
+      margin-bottom: var(--space-4);
+    }
+    .cta-block {
+      margin-bottom: var(--space-4);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

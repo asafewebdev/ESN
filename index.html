@@ -139,9 +139,14 @@
      HEADER
      ============================================ */
   header.site-header {
-    border-bottom: 1px solid var(--border);
+    /* position: relative (not fixed/sticky) only so it can sit above the
+       hero via z-index, it has no top/left offset so it stays exactly
+       where normal document flow puts it and scrolls away with the page
+       like any other element. */
+    position: relative;
+    z-index: 2;
     padding: var(--space-4) 0;
-    background: var(--bg);
+    background: transparent;
   }
 
   .header-row {
@@ -269,6 +274,12 @@
      HERO
      ============================================ */
   .hero {
+    /* Pulls the hero up underneath the now-transparent header, so the
+       photo shows through the header area instead of a gap of solid
+       --bg appearing above the hero. Value matches the header's own
+       measured rendered height (70px: padding + logo), see the header
+       rule above. */
+    margin-top: -70px;
     padding: var(--space-8) 0 var(--space-7);
     /* Top-to-bottom gradient, transparent at the top so the photo reads
        clean right under the header, darkening going down, strongest by

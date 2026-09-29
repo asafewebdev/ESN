@@ -34,10 +34,10 @@
 }
 </script>
 
-<!-- Google Fonts: Oswald (headline) + Inter (body) -->
+<!-- Google Fonts: Bebas Neue (headline) + Inter (body) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
   /* ============================================
@@ -58,7 +58,7 @@
     --text-muted: #9A9A9A;
     --text-faint: #808080; /* raised from #6B6B6B, that value read at ~3.7:1 on #0A0A0A, below WCAG AA 4.5:1 */
 
-    --font-head: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-head: 'Bebas Neue', 'Arial Narrow', sans-serif;
     --font-body: 'Inter', -apple-system, sans-serif;
 
     --space-1: 4px;
@@ -315,16 +315,20 @@
 
   .hero h1 {
     font-family: var(--font-head);
-    font-weight: 700;
+    /* Bebas Neue only ships one weight (400), it already reads as a
+       bold display face by design, no font-weight needed, forcing 700
+       on it would just fake-bold and look rough. */
     text-transform: uppercase;
     /* Reduced from clamp(2.2rem, 8vw, 4.2rem) to offset the taller
        line-height below, so the headline doesn't grow noticeably taller. */
     font-size: clamp(2rem, 7vw, 3.8rem);
-    /* Was 1.04, too tight for condensed uppercase Portuguese text, the
-       tilde in "Locação" and similar diacritics were clipping into the
-       line above on wrap. */
-    line-height: 1.25;
-    letter-spacing: 0.005em;
+    /* Bumped from 1.25, Bebas Neue's tall/narrow letterforms need
+       slightly more room than Oswald did for the tilde in "Locação"
+       and similar diacritics to clear the line above on wrap. */
+    line-height: 1.3;
+    /* Tightened from 0.005em, Bebas Neue reads airy at this size with
+       default tracking. */
+    letter-spacing: -0.01em;
     margin: 0 0 var(--space-4);
     color: var(--white);
     /* Two layers: a tight near-black contact shadow for a subtle outline,
@@ -448,10 +452,12 @@
 
   .section-title {
     font-family: var(--font-head);
-    font-weight: 700;
     text-transform: uppercase;
     font-size: clamp(1.7rem, 4.5vw, 2.5rem);
-    line-height: 1.12;
+    /* Bumped from 1.12 for Bebas Neue, same diacritic-clearance reason
+       as the hero H1. */
+    line-height: 1.2;
+    letter-spacing: -0.005em;
     color: var(--white);
     margin: 0 0 var(--space-3);
     max-width: 22ch;
@@ -573,7 +579,6 @@
   .trust-logo--atvos {
     font-family: var(--font-head);
     text-transform: uppercase;
-    font-weight: 700;
     font-size: 20px;
     letter-spacing: 0.02em;
   }
@@ -588,7 +593,6 @@
   .trust-logo--raizen {
     font-family: var(--font-head);
     text-transform: uppercase;
-    font-weight: 500;
     font-size: 19px;
     letter-spacing: 0.1em;
   }
@@ -602,7 +606,6 @@
   .trust-logo--bunge {
     font-family: var(--font-head);
     text-transform: uppercase;
-    font-weight: 700;
     font-size: 22px;
     letter-spacing: -0.01em;
   }
@@ -731,7 +734,6 @@
 
   .feature-stat-num {
     font-family: var(--font-head);
-    font-weight: 700;
     font-variant-numeric: tabular-nums;
     font-size: clamp(2rem, 5vw, 2.6rem);
     color: var(--red);
@@ -786,7 +788,6 @@
     border: 1px solid var(--red-dim);
     border-radius: 50%;
     font-family: var(--font-head);
-    font-weight: 600;
     font-variant-numeric: tabular-nums;
     font-size: 14px;
     color: var(--red-text);
@@ -795,7 +796,6 @@
 
   .card-title {
     font-family: var(--font-head);
-    font-weight: 700;
     text-transform: uppercase;
     font-size: clamp(1.3rem, 3vw, 1.7rem);
     color: var(--white);
@@ -885,10 +885,10 @@
 
   .final-cta-title {
     font-family: var(--font-head);
-    font-weight: 700;
     text-transform: uppercase;
     font-size: clamp(1.8rem, 5vw, 2.8rem);
-    line-height: 1.25; /* same fix as the hero H1, keeps ç/ã from overlapping across wrapped lines */
+    line-height: 1.3; /* same fix as the hero H1, keeps ç/ã from overlapping across wrapped lines, bumped from 1.25 for Bebas Neue */
+    letter-spacing: -0.01em;
     color: var(--white);
     margin: 0 0 var(--space-4);
   }
@@ -938,7 +938,6 @@
   .footer-label {
     display: block;
     font-family: var(--font-head);
-    font-weight: 600;
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;

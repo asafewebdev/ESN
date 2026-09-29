@@ -1045,7 +1045,19 @@
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    transition: transform 150ms ease, box-shadow 200ms ease;
+    /* Hidden until the page scrolls past the hero, the hero already has
+       its own big CTA, showing this at the top too just sat on top of
+       the stock badges and covered them. */
+    opacity: 0;
+    transform: scale(0.85);
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  }
+
+  .whatsapp-float.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
   }
 
   .whatsapp-float:hover {
@@ -1760,17 +1772,22 @@ fbq('track', 'PageView');
 <!-- Header scroll state, additive and independent from the scripts above.
      Adds .is-scrolled once the page scrolls past the top, fading the
      header to a solid background, and removes it back at the top, fading
-     back to the photo showing through. -->
+     back to the photo showing through. Also reveals the floating
+     WhatsApp button once the hero has scrolled out of view, the hero
+     already has its own CTA, so the floating button stays hidden there
+     instead of sitting on top of the stock badges. -->
 <script>
   (function () {
     'use strict';
 
     var header = document.querySelector('.site-header');
-    if (!header) {
-      return;
-    }
+    var hero = document.querySelector('.hero');
+    var whatsappFloat = document.getElementById('cta-orcamento-float');
 
     function updateHeaderState() {
+      if (!header) {
+        return;
+      }
       if (window.scrollY > 10) {
         header.classList.add('is-scrolled');
       } else {
@@ -1778,8 +1795,25 @@ fbq('track', 'PageView');
       }
     }
 
-    window.addEventListener('scroll', updateHeaderState, { passive: true });
-    updateHeaderState();
+    function updateWhatsappFloatState() {
+      if (!whatsappFloat) {
+        return;
+      }
+      var heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+      if (heroBottom <= 0) {
+        whatsappFloat.classList.add('is-visible');
+      } else {
+        whatsappFloat.classList.remove('is-visible');
+      }
+    }
+
+    function onScroll() {
+      updateHeaderState();
+      updateWhatsappFloatState();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
 </script>
 

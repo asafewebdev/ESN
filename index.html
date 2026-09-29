@@ -285,6 +285,13 @@
        measured rendered height (70px: padding + logo), see the header
        rule above. */
     margin-top: -70px;
+    /* Taller hero, matching the reference, the photo fills most of the
+       first screen and the content block sits centered within it
+       instead of being top-anchored right under the header. svh avoids
+       the 100vh-includes-mobile-browser-chrome sizing issue. */
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
     padding: var(--space-8) 0 var(--space-7);
     /* Top-to-bottom gradient, transparent at the top so the photo reads
        clean right under the header, darkening going down, strongest by

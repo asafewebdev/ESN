@@ -139,11 +139,19 @@
      HEADER
      ============================================ */
   header.site-header {
-    /* position: relative (not fixed/sticky) only so it can sit above the
-       hero via z-index, it has no top/left offset so it stays exactly
-       where normal document flow puts it and scrolls away with the page
-       like any other element. */
-    position: relative;
+    /* position: absolute (not fixed/sticky), overlaid on top of the
+       hero instead of taking up its own space in document flow. This
+       replaces an earlier negative-margin-on-the-hero technique that
+       had to be hand-tuned to the header's exact pixel height and
+       broke again the moment the hero's own sizing changed, absolute
+       positioning here doesn't depend on that at all. It's still part
+       of the normal document, not the viewport, so it scrolls away
+       with the page like everything else, it just doesn't reserve its
+       own row before the hero starts. */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 2;
     padding: var(--space-4) 0;
     background: transparent;
@@ -279,12 +287,6 @@
      HERO
      ============================================ */
   .hero {
-    /* Pulls the hero up underneath the now-transparent header, so the
-       photo shows through the header area instead of a gap of solid
-       --bg appearing above the hero. Value matches the header's own
-       measured rendered height (70px: padding + logo), see the header
-       rule above. */
-    margin-top: -70px;
     /* Taller hero, matching the reference, the photo fills most of the
        first screen and the content block sits centered within it
        instead of being top-anchored right under the header. svh avoids
@@ -292,7 +294,13 @@
     min-height: 100svh;
     display: flex;
     align-items: center;
-    padding: var(--space-8) 0 var(--space-7);
+    /* No negative margin here, the header is position: absolute and
+       overlaid on top of the hero (see the header rule), so the hero
+       starts naturally at the very top of the page on its own, nothing
+       to compensate for. padding-top just needs to clear the header's
+       own height (70px) so the content block never renders underneath
+       it, comfortable buffer above that. */
+    padding: var(--space-9) 0 var(--space-7);
     /* Top-to-bottom gradient, transparent at the top so the photo reads
        clean right under the header, darkening going down, strongest by
        the CTA/badges row at the bottom. */
@@ -1123,13 +1131,10 @@
        screen instead of requiring a long scroll to see the CTA. */
     .hero {
       /* Header is taller here (two rows: logo, then Vagas de Emprego on
-         its own line below, 101px measured), so the negative margin
-         that tucks the hero's photo underneath it needs a bigger value
-         than the desktop one above. padding-top matches that same
-         101px, so the actual headline text clears the header exactly
-         instead of the two overlapping, only the photo shows through
-         the header, not the wrapped nav row's text. */
-      margin-top: -101px;
+         its own line below, 101px measured), padding-top matches that
+         so the headline clears it exactly. No margin-top needed, the
+         header is position: absolute and overlaid on the hero, it
+         doesn't push the hero down in flow to begin with. */
       padding: 101px 0 var(--space-6);
     }
     .hero h1 {

@@ -141,41 +141,7 @@
   header.site-header {
     border-bottom: 1px solid var(--border);
     padding: var(--space-4) 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    /* No background-image of its own anymore. The header floats over the
-       hero (which is the only element carrying the photo) instead of
-       each box independently cropping its own copy of it, that's what
-       caused the seam/duplicated-looking join where the header ended and
-       the hero began. Only a flat tint here, the hero's photo shows
-       through it directly. */
-    background: rgba(0, 0, 0, 0.18);
-  }
-
-  /* Solid overlay that fades in once the page scrolls past the hero photo,
-     and fades back out at the very top, so the header only shows the
-     photo through it while the hero itself is in view. */
-  .site-header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
     background: var(--bg);
-    opacity: 0;
-    transition: opacity 250ms ease;
-    pointer-events: none;
-  }
-
-  .site-header.is-scrolled::before {
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .site-header::before {
-      transition: none;
-    }
   }
 
   .header-row {
@@ -303,14 +269,10 @@
      HERO
      ============================================ */
   .hero {
-    /* Extra top padding clears the now-fixed header, which floats over
-       the hero instead of pushing it down in normal flow. */
-    padding: calc(var(--space-8) + 72px) 0 var(--space-7);
+    padding: var(--space-8) 0 var(--space-7);
     /* Top-to-bottom gradient, transparent at the top so the photo reads
        clean right under the header, darkening going down, strongest by
-       the CTA/badges row at the bottom. This is the only element that
-       carries the photo, the header floats transparently over it, no
-       second independently-cropped copy to line up. */
+       the CTA/badges row at the bottom. */
     background-image:
       linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.85) 100%),
       url('layer-do-brasil%20%281%29.webp');
@@ -1787,31 +1749,17 @@ fbq('track', 'PageView');
   })();
 </script>
 
-<!-- Header scroll state, additive and independent from the scripts above.
-     Adds .is-scrolled once the page scrolls past the top, fading the
-     header to a solid background, and removes it back at the top, fading
-     back to the photo showing through. Also reveals the floating
-     WhatsApp button once the hero has scrolled out of view, the hero
-     already has its own CTA, so the floating button stays hidden there
-     instead of sitting on top of the stock badges. -->
+<!-- Floating WhatsApp button visibility, additive and independent from
+     the scripts above. Reveals the button once the hero has scrolled
+     out of view, the hero already has its own CTA, so the floating
+     button stays hidden there instead of sitting on top of the stock
+     badges. -->
 <script>
   (function () {
     'use strict';
 
-    var header = document.querySelector('.site-header');
     var hero = document.querySelector('.hero');
     var whatsappFloat = document.getElementById('cta-orcamento-float');
-
-    function updateHeaderState() {
-      if (!header) {
-        return;
-      }
-      if (window.scrollY > 10) {
-        header.classList.add('is-scrolled');
-      } else {
-        header.classList.remove('is-scrolled');
-      }
-    }
 
     function updateWhatsappFloatState() {
       if (!whatsappFloat) {
@@ -1825,13 +1773,8 @@ fbq('track', 'PageView');
       }
     }
 
-    function onScroll() {
-      updateHeaderState();
-      updateWhatsappFloatState();
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    window.addEventListener('scroll', updateWhatsappFloatState, { passive: true });
+    updateWhatsappFloatState();
   })();
 </script>
 

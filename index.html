@@ -393,27 +393,32 @@
     outline-offset: 3px;
   }
 
-  /* Secondary link: deliberately muted, no button chrome.
-     Kept visually subordinate because past campaigns for this
-     client pulled in job applicants instead of rental leads
-     when this link looked like a second CTA. */
+  /* Secondary link: small white pill, deliberately subordinate to
+     btn-primary (smaller font-size/padding, no min-height). Kept
+     visually secondary because past campaigns for this client pulled
+     in job applicants instead of rental leads when this link looked
+     like a second CTA. */
   .rh-link {
-    display: inline-block;
-    margin-top: var(--space-4);
-    padding: var(--space-2) 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-3);
+    padding: 10px var(--space-4);
     font-family: var(--font-body);
-    font-weight: 400;
+    font-weight: 600;
     font-size: 13px;
-    color: var(--text-faint);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    max-width: 420px;
+    letter-spacing: 0.01em;
+    color: var(--bg);
+    background: var(--white);
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background-color 220ms ease;
   }
 
-  .rh-link:hover { color: var(--text-muted); }
+  .rh-link:hover { background: #E6E6E6; }
   .rh-link:focus-visible {
-    outline: 1px solid var(--text-muted);
-    outline-offset: 4px;
+    outline: 2px solid var(--white);
+    outline-offset: 3px;
   }
 
   /* ============================================
@@ -1301,7 +1306,7 @@
           data-whatsapp-number="5500000000001"
           data-whatsapp-text="Olá, estou buscando vaga de montador de andaime."
         >
-          Está procurando vaga de montador, fale com o RH aqui.
+          Vagas de Emprego
         </a>
       </div>
     </div>

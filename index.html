@@ -139,17 +139,17 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    /* Same photo as .hero, background-attachment: fixed on both means they
-       share one continuous image plane instead of each showing its own
-       independent crop, no seam where the header ends and the hero
-       begins. Flat, uniform tint across the whole bar now, not a
-       left-to-right gradient, the dark patch on the left was removed. */
+    /* Same photo as .hero, matching background-position keeps the two
+       lined up at the top so there's no seam at scroll position 0. Flat,
+       uniform tint across the whole bar, not a left-to-right gradient.
+       background-attachment: fixed was removed, it's unreliable on
+       mobile browsers (iOS Safari in particular) and was the cause of
+       the janky hero behavior on scroll. */
     background-image:
       linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.18)),
       url('layer-do-brasil%20%281%29.webp');
     background-size: cover;
     background-position: center top;
-    background-attachment: fixed;
     background-repeat: no-repeat;
     background-color: var(--bg);
   }
@@ -296,7 +296,11 @@
       url('layer-do-brasil%20%281%29.webp');
     background-size: cover;
     background-position: center top;
-    background-attachment: fixed; /* same as the header, one continuous image plane, no seam at the boundary */
+    /* background-attachment: fixed removed, it's unreliable on mobile
+       browsers (iOS Safari in particular) and made the hero photo scroll
+       janky/incorrectly. Normal scroll attachment, matches the header's
+       background-position so the two still line up with no seam at the
+       top of the page. */
     background-repeat: no-repeat;
     background-color: var(--bg);
   }
@@ -1019,6 +1023,54 @@
   }
 
   /* ============================================
+     FLOATING WHATSAPP BUTTON
+     Uses WhatsApp's own brand green, the one deliberate exception to the
+     site's red accent, it's a functional recognition color here, not a
+     decorative one, people look for that exact green to know it's a
+     direct chat link. Safe-area inset keeps it clear of the iOS home
+     indicator.
+     ============================================ */
+  .whatsapp-float {
+    position: fixed;
+    right: 20px;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 150ms ease, box-shadow 200ms ease;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .whatsapp-float:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 3px;
+  }
+
+  .whatsapp-float svg {
+    width: 30px;
+    height: 30px;
+    color: var(--white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-float {
+      transition: none;
+    }
+  }
+
+  /* ============================================
      RESPONSIVE ADJUSTMENTS
      ============================================ */
   @media (max-width: 480px) {
@@ -1398,6 +1450,21 @@
 
 </main>
 
+<!-- Floating WhatsApp button, wired to the same handleOrcamentoClick
+     function and the same Meta Pixel OrcamentoClick event as the other
+     Solicitar Orçamento buttons, not a new event. -->
+<!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the other Solicitar Orçamento buttons -->
+<a
+  href="#"
+  class="whatsapp-float"
+  id="cta-orcamento-float"
+  data-whatsapp-number="5500000000000"
+  data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+  aria-label="Solicitar orçamento pelo WhatsApp"
+>
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 8.7c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.4.2.5.7 1.6.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.2 1.7-.3.8-1.7 1.5-2.4 1.6-.6.1-1.3.1-2.1-.1-.5-.1-1.1-.3-1.9-.7-3.3-1.4-5.4-4.7-5.6-4.9-.2-.3-1.3-1.8-1.3-3.4 0-1.6.9-2.4 1.2-2.7z" fill="currentColor"/></svg>
+</a>
+
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
@@ -1522,10 +1589,11 @@ fbq('track', 'PageView');
     }
 
     // Shared by #cta-orcamento (hero), #cta-orcamento-header (nav),
-    // #cta-orcamento-final (closing CTA card), and #cta-orcamento-footer
-    // (footer), each reads its own data attributes, but they all run
-    // through this one function, so there is only one OrcamentoClick
-    // event definition, not four.
+    // #cta-orcamento-final (closing CTA card), #cta-orcamento-footer
+    // (footer), and #cta-orcamento-float (floating button), each reads
+    // its own data attributes, but they all run through this one
+    // function, so there is only one OrcamentoClick event definition,
+    // not five.
     function handleOrcamentoClick(event) {
       event.preventDefault();
 
@@ -1552,7 +1620,7 @@ fbq('track', 'PageView');
       );
     }
 
-    ['cta-orcamento', 'cta-orcamento-header', 'cta-orcamento-final', 'cta-orcamento-footer'].forEach(function (id) {
+    ['cta-orcamento', 'cta-orcamento-header', 'cta-orcamento-final', 'cta-orcamento-footer', 'cta-orcamento-float'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) {
         el.addEventListener('click', handleOrcamentoClick);

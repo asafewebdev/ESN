@@ -397,37 +397,6 @@
     outline-offset: 4px;
   }
 
-  /* Stat badges (hero) */
-  .badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  .badge {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-    background: var(--bg-raised);
-    border: 1px solid var(--border);
-    padding: var(--space-3) var(--space-4);
-  }
-
-  .badge-num {
-    font-family: var(--font-head);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    font-size: 18px;
-    color: var(--white);
-    white-space: nowrap;
-  }
-
-  .badge-label {
-    font-size: 13px;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-
   /* ============================================
      STAT ITEM LAYOUT
      Reused by the feature-stats grid inside Quem Somos.
@@ -486,6 +455,62 @@
     color: var(--text-muted);
     max-width: 56ch;
     margin: 0;
+  }
+
+  /* ============================================
+     STOCK FACTS
+     Four equal facts, moved out of the hero into their own section.
+     All four share identical styling on purpose, none is a highlighted
+     "active" state, they're just four facts, not a tab selector.
+     ============================================ */
+  .stock-facts {
+    padding: var(--space-7) 0;
+  }
+
+  .stock-facts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .stock-facts-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-5);
+    }
+  }
+
+  .stock-fact {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    background: var(--bg-raised);
+    border-left: 4px solid var(--red);
+    border-radius: 10px;
+    padding: var(--space-5);
+  }
+
+  .stock-fact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--red);
+    color: var(--red);
+  }
+
+  .stock-fact-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .stock-fact-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white);
   }
 
   /* ============================================
@@ -1082,8 +1107,6 @@
      RESPONSIVE ADJUSTMENTS
      ============================================ */
   @media (max-width: 480px) {
-    .badge-row { flex-direction: column; }
-    .badge { width: 100%; }
     .btn-primary { max-width: 100%; }
     .rh-link { max-width: 100%; }
 
@@ -1231,23 +1254,40 @@
           Está procurando vaga de montador, fale com o RH aqui.
         </a>
       </div>
+    </div>
+  </section>
 
-      <div class="badge-row">
-        <div class="badge">
-          <span class="badge-num">200 t</span>
-          <span class="badge-label">em estoque</span>
+  <!-- ============================================
+       STOCK FACTS
+       No heading, just four equal facts, same styling on all four,
+       none is a highlighted/active state.
+       ============================================ -->
+  <section class="stock-facts">
+    <div class="container">
+      <div class="stock-facts-grid">
+        <div class="stock-fact">
+          <span class="stock-fact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="stock-fact-text">200 toneladas em estoque</span>
         </div>
-        <div class="badge">
-          <span class="badge-num">Brasil</span>
-          <span class="badge-label">atendimento nacional</span>
+        <div class="stock-fact">
+          <span class="stock-fact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="stock-fact-text">Atendimento nacional em todo o Brasil</span>
         </div>
-        <div class="badge">
-          <span class="badge-num">100%</span>
-          <span class="badge-label">estoque próprio, sem intermediário</span>
+        <div class="stock-fact">
+          <span class="stock-fact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="stock-fact-text">Estoque próprio, sem intermediário</span>
         </div>
-        <div class="badge">
-          <span class="badge-num">5 mil+</span>
-          <span class="badge-label">projetos atendidos</span>
+        <div class="stock-fact">
+          <span class="stock-fact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="stock-fact-text">5 mil+ projetos atendidos</span>
         </div>
       </div>
     </div>

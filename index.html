@@ -7,7 +7,6 @@
 <meta name="description" content="Locação de andaime multidirecional em todo o Brasil. Estoque próprio de 200 toneladas, sem intermediário. Sede em Deodápolis, MS. Solicite um orçamento.">
 
 <!-- Local business structured data, matches the Google Meu Negócio listing exactly.
-     TODO: replace "telephone": "" with the real sales phone number (E.164 format, e.g. +5567900000000)
      TODO: replace "url" with the live domain once the page is published -->
 <script type="application/ld+json">
 {
@@ -17,7 +16,7 @@
   "image": "",
   "description": "Locação de andaime multidirecional com estoque próprio e atendimento em todo o território nacional.",
   "url": "https://www.esnindustrial.com.br/",
-  "telephone": "",
+  "telephone": "+5571991576357",
   "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
@@ -32,6 +31,20 @@
     "name": "Brasil"
   }
 }
+</script>
+
+<!-- Meta Pixel: ESN -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1825070295135595');
+fbq('track', 'PageView');
 </script>
 
 <!-- Google Fonts: Bebas Neue (headline) + Inter (body) -->
@@ -189,7 +202,7 @@
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    transition: color 250ms ease;
+    transition: color 250ms ease, translate 180ms ease;
     /* Safety net against forced horizontal overflow on very narrow
        screens, harmless alongside white-space: nowrap above. */
     overflow-wrap: break-word;
@@ -232,7 +245,7 @@
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
-    transition: background-color 220ms ease, box-shadow 220ms ease;
+    transition: background-color 220ms ease, box-shadow 220ms ease, translate 180ms ease;
   }
 
   .nav-cta:hover { background: #B82B20; }
@@ -331,12 +344,7 @@
     letter-spacing: -0.01em;
     margin: 0 0 var(--space-4);
     color: var(--white);
-    /* Two layers: a tight near-black contact shadow for a subtle outline,
-       plus a softer wider one for ambient separation. Strengthened after
-       the overlay became a gradient, the headline now sits near the top
-       of the hero where the scrim is almost gone and the photo shows
-       through nearly at full brightness. */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 4px 14px rgba(0, 0, 0, 0.75);
+    text-shadow: none;
     /* Safety net against forced horizontal overflow on very narrow screens. */
     overflow-wrap: break-word;
     word-break: break-word;
@@ -344,10 +352,7 @@
 
   .headline-highlight {
     color: var(--red);
-    /* Red on a busy, now nearly unfiltered photo needs more separation
-       than white does, so this runs darker than the white text's shadow
-       above rather than raising the overlay opacity back up. */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.92), 0 4px 14px rgba(0, 0, 0, 0.85);
+    text-shadow: none;
   }
 
   .hero-sub {
@@ -357,7 +362,7 @@
     font-weight: 400;
     margin: 0 0 var(--space-6);
     max-width: 42ch;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 3px 10px rgba(0, 0, 0, 0.7);
+    text-shadow: none;
   }
 
   /* CTA block */
@@ -383,7 +388,7 @@
     min-height: 56px;
     width: 100%;
     max-width: 420px;
-    transition: background-color 220ms ease, box-shadow 220ms ease, transform 150ms ease;
+    transition: background-color 220ms ease, box-shadow 220ms ease, transform 150ms ease, translate 180ms ease;
   }
 
   .btn-primary:hover { background: #B82B20; }
@@ -412,7 +417,7 @@
     background: var(--white);
     text-decoration: none;
     border-radius: 999px;
-    transition: background-color 220ms ease;
+    transition: background-color 220ms ease, translate 180ms ease;
   }
 
   .rh-link:hover { background: #E6E6E6; }
@@ -574,51 +579,23 @@
   }
 
   .trust-logo {
-    color: var(--text-faint);
-    white-space: nowrap;
+    display: block;
+    width: 150px;
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: contain;
     user-select: none;
-  }
-
-  /* Loosely distinct type treatments per name so the row reads as
-     different brand marks, not one style repeated five times. */
-  .trust-logo--atvos {
-    font-family: var(--font-head);
-    text-transform: uppercase;
-    font-size: 20px;
-    letter-spacing: 0.02em;
-  }
-
-  .trust-logo--corbion {
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 19px;
-    letter-spacing: 0.04em;
-  }
-
-  .trust-logo--raizen {
-    font-family: var(--font-head);
-    text-transform: uppercase;
-    font-size: 19px;
-    letter-spacing: 0.1em;
-  }
-
-  .trust-logo--adecoagro {
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 18px;
-  }
-
-  .trust-logo--bunge {
-    font-family: var(--font-head);
-    text-transform: uppercase;
-    font-size: 22px;
-    letter-spacing: -0.01em;
   }
 
   @media (max-width: 640px) {
     .trust-group {
       gap: var(--space-5);
       padding-right: var(--space-5);
+    }
+
+    .trust-logo {
+      width: 135px;
+      height: 36px;
     }
   }
 
@@ -737,7 +714,24 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background-color 220ms ease, transform 150ms ease;
+    transition: background-color 220ms ease, transform 150ms ease, translate 180ms ease;
+  }
+
+  .video-facade {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-facade .video-poster {
+    position: absolute;
+    inset: 0;
+    object-fit: contain;
+  }
+
+  .video-facade .video-play-btn {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   }
 
   .video-play-btn:hover {
@@ -1016,7 +1010,7 @@
     font-size: 14px;
     color: var(--white);
     text-decoration: none;
-    transition: color 200ms ease;
+    transition: color 200ms ease, translate 180ms ease;
   }
 
   .footer-link:hover {
@@ -1045,7 +1039,7 @@
     border-radius: 50%;
     border: 1px solid var(--border);
     color: var(--text-muted);
-    transition: color 200ms ease, border-color 200ms ease;
+    transition: color 200ms ease, border-color 200ms ease, translate 180ms ease;
   }
 
   .footer-social-link:hover {
@@ -1091,10 +1085,11 @@
   }
 
   .footer-credit a {
+    display: inline-block;
     color: var(--white);
     text-decoration: underline;
     text-underline-offset: 3px;
-    transition: color 200ms ease;
+    transition: color 200ms ease, translate 180ms ease;
   }
 
   .footer-credit a:hover {
@@ -1130,7 +1125,7 @@
     opacity: 0;
     transform: scale(0.85);
     pointer-events: none;
-    transition: opacity 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+    transition: opacity 200ms ease, transform 200ms ease, box-shadow 200ms ease, translate 180ms ease;
   }
 
   .whatsapp-float.is-visible {
@@ -1150,9 +1145,24 @@
   }
 
   .whatsapp-float svg {
+    display: block;
+    flex-shrink: 0;
     width: 30px;
     height: 30px;
     color: var(--white);
+  }
+
+  /* Independent translation preserves the existing scale effects. */
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    :is(.btn-primary, .nav-cta, .nav-link, .rh-link, .video-play-btn,
+        .footer-link, .footer-social-link, .footer-credit a, .whatsapp-float):is(:hover, :focus-visible) {
+      translate: 0 -3px;
+    }
+
+    :is(.btn-primary, .nav-cta, .nav-link, .rh-link, .video-play-btn,
+        .footer-link, .footer-social-link, .footer-credit a, .whatsapp-float):active {
+      translate: 0 0;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1233,6 +1243,12 @@
 </head>
 <body>
 
+<noscript>
+  <img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1825070295135595&ev=PageView&noscript=1"
+  />
+</noscript>
+
 <header class="site-header">
   <div class="container header-row">
     <div class="brand-lockup">
@@ -1260,12 +1276,11 @@
       <!-- Header CTA: wired to the same click handler and the same
            Meta Pixel OrcamentoClick event as #cta-orcamento in the hero,
            this is not a second, separate event. -->
-      <!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the hero CTA -->
       <a
         href="#"
         class="nav-cta"
         id="cta-orcamento-header"
-        data-whatsapp-number="5500000000000"
+        data-whatsapp-number="5571991576357"
         data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
       >
         Solicitar Orçamento
@@ -1287,12 +1302,11 @@
 
       <div class="cta-block">
         <!-- Primary CTA: fires Meta Pixel event OrcamentoClick, then opens WhatsApp -->
-        <!-- TODO: replace 5500000000000 with the real WhatsApp number (with country code, no symbols) for the sales team -->
         <a
           href="#"
           class="btn-primary"
           id="cta-orcamento"
-          data-whatsapp-number="5500000000000"
+          data-whatsapp-number="5571991576357"
           data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
         >
           Solicitar Orçamento
@@ -1361,31 +1375,30 @@
   <section class="trust-bar">
     <div class="container">
       <p class="trust-bar-label">Mais de 500 toneladas de andaime próprio disponível</p>
-      <p class="sr-only">Clientes atendidos: Atvos, Corbion, Raízen, Adecoagro, Bunge.</p>
+      <p class="sr-only">Clientes atendidos: Adecoagro, Atvos, bp bioenergy, Bunge, Coamo, Corbion e Raízen.</p>
 
       <div class="trust-marquee" aria-hidden="true">
         <div class="trust-track" id="trust-track">
           <div class="trust-group">
-            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
-            <span class="trust-logo trust-logo--atvos">Atvos</span>
-            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
-            <span class="trust-logo trust-logo--corbion">Corbion</span>
-            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
-            <span class="trust-logo trust-logo--raizen">Raízen</span>
-            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
-            <span class="trust-logo trust-logo--adecoagro">Adecoagro</span>
-            <!-- TODO replace this text wordmark with the real client logo image file once provided, keep the same width and alignment when swapping -->
-            <span class="trust-logo trust-logo--bunge">Bunge</span>
+            <img class="trust-logo" src="agro.webp" alt="Adecoagro" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="atvos.webp" alt="Atvos" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="bp.webp" alt="bp bioenergy" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="bunge.webp" alt="Bunge" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="coamo.webp" alt="Coamo" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="corbion.webp" alt="Corbion" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="empres-um.webp" alt="Raízen" width="300" height="80" decoding="async">
           </div>
           <!-- Exact duplicate of the group above, back to back, this is what
                makes the loop seamless, the track only has to translate the
                width of one group before it can reset to 0 unnoticed. -->
           <div class="trust-group">
-            <span class="trust-logo trust-logo--atvos">Atvos</span>
-            <span class="trust-logo trust-logo--corbion">Corbion</span>
-            <span class="trust-logo trust-logo--raizen">Raízen</span>
-            <span class="trust-logo trust-logo--adecoagro">Adecoagro</span>
-            <span class="trust-logo trust-logo--bunge">Bunge</span>
+            <img class="trust-logo" src="agro.webp" alt="Adecoagro" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="atvos.webp" alt="Atvos" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="bp.webp" alt="bp bioenergy" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="bunge.webp" alt="Bunge" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="coamo.webp" alt="Coamo" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="corbion.webp" alt="Corbion" width="300" height="80" decoding="async">
+            <img class="trust-logo" src="empres-um.webp" alt="Raízen" width="300" height="80" decoding="async">
           </div>
         </div>
       </div>
@@ -1473,14 +1486,9 @@
           </ul>
           <p class="card-result"><span class="card-result-label">Resultado.</span> Sua equipe monta antes. Sua produção volta antes. Seu custo de mão de obra cai.</p>
         </div>
-        <!-- Click-to-play facade, the real Vimeo iframe (video 1178541580) is
-             only created on click, so the page never loads the Vimeo player
-             or starts any video traffic on page load, just this lightweight
-             button until someone actually wants to watch. -->
-        <!-- TODO: replace this solid background with an actual static thumbnail image
-             extracted from the video, until then the card's existing dark background
-             is fine as a stand-in. -->
+        <!-- The cover stays visible until play creates the Vimeo player. -->
         <div class="card-media media-placeholder media-placeholder--video is-filled video-facade" id="card01-video-facade">
+          <img class="video-poster" src="video-capa.jpeg" alt="Comparativo de montagem: andaime multidirecional e tubo equipado." loading="lazy" decoding="async">
           <button type="button" class="video-play-btn" aria-label="Reproduzir vídeo, comparativo de montagem cronometrado">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
           </button>
@@ -1569,12 +1577,11 @@
           <!-- Wired to the same handler and the same Meta Pixel OrcamentoClick
                event as #cta-orcamento (hero) and #cta-orcamento-header (nav),
                not a new event, not a new WhatsApp function. -->
-          <!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the hero CTA -->
           <a
             href="#"
             class="btn-primary"
             id="cta-orcamento-final"
-            data-whatsapp-number="5500000000000"
+            data-whatsapp-number="5571991576357"
             data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
           >
             Solicitar Orçamento Agora &rarr;
@@ -1589,16 +1596,17 @@
 <!-- Floating WhatsApp button, wired to the same handleOrcamentoClick
      function and the same Meta Pixel OrcamentoClick event as the other
      Solicitar Orçamento buttons, not a new event. -->
-<!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the other Solicitar Orçamento buttons -->
 <a
   href="#"
   class="whatsapp-float"
   id="cta-orcamento-float"
-  data-whatsapp-number="5500000000000"
+  data-whatsapp-number="5571991576357"
   data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
   aria-label="Solicitar orçamento pelo WhatsApp"
 >
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 8.7c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.4.2.5.7 1.6.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.2 1.7-.3.8-1.7 1.5-2.4 1.6-.6.1-1.3.1-2.1-.1-.5-.1-1.1-.3-1.9-.7-3.3-1.4-5.4-4.7-5.6-4.9-.2-.3-1.3-1.8-1.3-3.4 0-1.6.9-2.4 1.2-2.7z" fill="currentColor"/></svg>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
 </a>
 
 <footer class="site-footer">
@@ -1659,15 +1667,16 @@
             <!-- Wired to the same handleOrcamentoClick function and the same
                  Meta Pixel OrcamentoClick event as the other Solicitar
                  Orçamento buttons, not a new event. -->
-            <!-- TODO: replace 5500000000000 with the real WhatsApp number for the sales team, must match the other Solicitar Orçamento buttons -->
             <a
               href="#"
               class="footer-link"
               id="cta-orcamento-footer"
-              data-whatsapp-number="5500000000000"
+              data-whatsapp-number="5571991576357"
               data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
             >
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.5A10 10 0 1 0 12 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 8.7c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.4.2.5.7 1.6.7 1.8.1.1.1.3 0 .4-.1.2-.2.3-.3.4-.1.2-.3.3-.4.5-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.5.7 1.8.8.3.1.5.2.6.3.1.2.1.9-.2 1.7-.3.8-1.7 1.5-2.4 1.6-.6.1-1.3.1-2.1-.1-.5-.1-1.1-.3-1.9-.7-3.3-1.4-5.4-4.7-5.6-4.9-.2-.3-1.3-1.8-1.3-3.4 0-1.6.9-2.4 1.2-2.7z" fill="currentColor"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
               WhatsApp
             </a>
           </li>
@@ -1691,30 +1700,6 @@
   </div>
 </footer>
 
-<!-- ============================================
-     META PIXEL BASE SNIPPET
-     TODO: uncomment this block and paste the real Pixel ID
-     in the two spots marked below before going live.
-     ============================================
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'PASTE_PIXEL_ID_HERE'); // TODO: replace with real Pixel ID
-fbq('track', 'PageView');
-</script>
-<noscript>
-  <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=PASTE_PIXEL_ID_HERE&ev=PageView&noscript=1"
-  />
-</noscript>
--->
-
 <script>
   (function () {
     'use strict';
@@ -1733,8 +1718,7 @@ fbq('track', 'PageView');
     function handleOrcamentoClick(event) {
       event.preventDefault();
 
-      // Fire Meta Pixel custom event before redirecting.
-      // Guarded so the button still works if the Pixel snippet above is commented out.
+      // Queue the click before opening WhatsApp, even while the Pixel SDK loads.
       if (typeof fbq === 'function') {
         fbq('trackCustom', 'OrcamentoClick');
       }
@@ -1878,7 +1862,7 @@ fbq('track', 'PageView');
 
     playBtn.addEventListener('click', function () {
       var iframe = document.createElement('iframe');
-      iframe.src = 'https://player.vimeo.com/video/1178541580?autoplay=1';
+      iframe.src = 'https://player.vimeo.com/video/1178541580?autoplay=1&muted=1';
       iframe.title = 'Vídeo, comparativo de montagem cronometrado';
       iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media');
       iframe.setAttribute('allowfullscreen', '');

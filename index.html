@@ -1274,7 +1274,7 @@ fbq('track', 'PageView');
       <a href="#garantias" class="nav-link nav-link--section">Garantia ESN</a>
 
       <!-- Header CTA: wired to the same click handler and the same
-           Meta Pixel OrcamentoClick event as #cta-orcamento in the hero,
+           Meta Pixel Lead event as #cta-orcamento in the hero,
            this is not a second, separate event. -->
       <a
         href="#"
@@ -1301,7 +1301,7 @@ fbq('track', 'PageView');
       <p class="hero-sub">Sua parada não pode esperar.</p>
 
       <div class="cta-block">
-        <!-- Primary CTA: fires Meta Pixel event OrcamentoClick, then opens WhatsApp -->
+        <!-- Primary CTA: fires Meta Pixel event Lead, then opens WhatsApp -->
         <a
           href="#"
           class="btn-primary"
@@ -1574,7 +1574,7 @@ fbq('track', 'PageView');
           <h2 class="final-cta-title">Sua Parada de Manutenção Não Pode Esperar</h2>
           <p class="final-cta-body">Não fique na mão de fornecedor sem estoque. A ESN tem 200 toneladas de andaime multidirecional prontas pra locação, com o melhor preço do Brasil.</p>
 
-          <!-- Wired to the same handler and the same Meta Pixel OrcamentoClick
+          <!-- Wired to the same handler and the same Meta Pixel Lead
                event as #cta-orcamento (hero) and #cta-orcamento-header (nav),
                not a new event, not a new WhatsApp function. -->
           <a
@@ -1594,7 +1594,7 @@ fbq('track', 'PageView');
 </main>
 
 <!-- Floating WhatsApp button, wired to the same handleOrcamentoClick
-     function and the same Meta Pixel OrcamentoClick event as the other
+     function and the same Meta Pixel Lead event as the other
      Solicitar Orçamento buttons, not a new event. -->
 <a
   href="#"
@@ -1665,7 +1665,7 @@ fbq('track', 'PageView');
         <ul class="footer-links">
           <li>
             <!-- Wired to the same handleOrcamentoClick function and the same
-                 Meta Pixel OrcamentoClick event as the other Solicitar
+                 Meta Pixel Lead event as the other Solicitar
                  Orçamento buttons, not a new event. -->
             <a
               href="#"
@@ -1713,14 +1713,14 @@ fbq('track', 'PageView');
     // #cta-orcamento-final (closing CTA card), #cta-orcamento-footer
     // (footer), and #cta-orcamento-float (floating button), each reads
     // its own data attributes, but they all run through this one
-    // function, so there is only one OrcamentoClick event definition,
+    // function, so there is only one Lead event definition,
     // not five.
     function handleOrcamentoClick(event) {
       event.preventDefault();
 
       // Queue the click before opening WhatsApp, even while the Pixel SDK loads.
       if (typeof fbq === 'function') {
-        fbq('trackCustom', 'OrcamentoClick');
+        fbq('track', 'Lead');
       }
 
       openWhatsApp(

@@ -426,6 +426,87 @@ fbq('track', 'PageView');
     outline-offset: 3px;
   }
 
+  body.quote-form-open { overflow: hidden; }
+
+  .quote-dialog {
+    width: min(420px, calc(100% - 32px));
+    max-width: none;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    margin: auto;
+    padding: var(--space-5);
+    overflow-y: auto;
+    color: var(--text);
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  .quote-dialog::backdrop { background: rgba(0, 0, 0, 0.72); }
+
+  .quote-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .quote-dialog-title {
+    margin: 0;
+    font-family: var(--font-head);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .quote-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 200ms ease, background-color 200ms ease, translate 180ms ease;
+  }
+
+  .quote-close:hover { color: var(--white); background: var(--bg-raised-2); }
+  .quote-close:focus-visible { outline: 2px solid var(--red-text); outline-offset: 2px; }
+
+  .quote-form { display: grid; gap: var(--space-4); }
+  .quote-field { display: grid; gap: var(--space-2); min-width: 0; }
+  .quote-field label { font-size: 14px; font-weight: 600; }
+
+  .quote-field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--white);
+    font: inherit;
+    font-size: 16px;
+  }
+
+  .quote-field input::placeholder { color: var(--text-muted); }
+  .quote-field input:focus-visible { outline: 2px solid var(--red-text); outline-offset: 2px; }
+
+  .quote-submit { max-width: none; min-height: 48px; margin-top: var(--space-2); font-size: 16px; }
+  .quote-submit:disabled { opacity: 0.6; cursor: wait; }
+
   /* ============================================
      STAT ITEM LAYOUT
      Reused by the feature-stats grid inside Quem Somos.
@@ -1155,12 +1236,12 @@ fbq('track', 'PageView');
   /* Independent translation preserves the existing scale effects. */
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
     :is(.btn-primary, .nav-cta, .nav-link, .rh-link, .video-play-btn,
-        .footer-link, .footer-social-link, .footer-credit a, .whatsapp-float):is(:hover, :focus-visible) {
+        .footer-link, .footer-social-link, .footer-credit a, .whatsapp-float, .quote-close):is(:hover, :focus-visible) {
       translate: 0 -3px;
     }
 
     :is(.btn-primary, .nav-cta, .nav-link, .rh-link, .video-play-btn,
-        .footer-link, .footer-social-link, .footer-credit a, .whatsapp-float):active {
+        .footer-link, .footer-social-link, .footer-credit a, .whatsapp-float, .quote-close):active {
       translate: 0 0;
     }
   }
@@ -1273,15 +1354,14 @@ fbq('track', 'PageView');
       <a href="#quem-somos" class="nav-link nav-link--section">Quem Somos</a>
       <a href="#garantias" class="nav-link nav-link--section">Garantia ESN</a>
 
-      <!-- Header CTA: wired to the same click handler and the same
-           Meta Pixel Lead event as #cta-orcamento in the hero,
-           this is not a second, separate event. -->
+      <!-- All commercial CTAs open the same quote form. -->
       <a
         href="#"
         class="nav-cta"
         id="cta-orcamento-header"
+        aria-haspopup="dialog" aria-controls="orcamento-dialog"
         data-whatsapp-number="5571991576357"
-        data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+        data-whatsapp-text="Olá, sou de {estado} e gostaria de fazer orçamento de locação de andaimes."
       >
         Solicitar Orçamento
       </a>
@@ -1301,13 +1381,14 @@ fbq('track', 'PageView');
       <p class="hero-sub">Sua parada não pode esperar.</p>
 
       <div class="cta-block">
-        <!-- Primary CTA: fires Meta Pixel event Lead, then opens WhatsApp -->
+        <!-- Lead is tracked only after the quote form is submitted. -->
         <a
           href="#"
           class="btn-primary"
           id="cta-orcamento"
+          aria-haspopup="dialog" aria-controls="orcamento-dialog"
           data-whatsapp-number="5571991576357"
-          data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+          data-whatsapp-text="Olá, sou de {estado} e gostaria de fazer orçamento de locação de andaimes."
         >
           Solicitar Orçamento
         </a>
@@ -1574,15 +1655,14 @@ fbq('track', 'PageView');
           <h2 class="final-cta-title">Sua Parada de Manutenção Não Pode Esperar</h2>
           <p class="final-cta-body">Não fique na mão de fornecedor sem estoque. A ESN tem 200 toneladas de andaime multidirecional prontas pra locação, com o melhor preço do Brasil.</p>
 
-          <!-- Wired to the same handler and the same Meta Pixel Lead
-               event as #cta-orcamento (hero) and #cta-orcamento-header (nav),
-               not a new event, not a new WhatsApp function. -->
+          <!-- Opens the shared quote form. -->
           <a
             href="#"
             class="btn-primary"
             id="cta-orcamento-final"
+            aria-haspopup="dialog" aria-controls="orcamento-dialog"
             data-whatsapp-number="5571991576357"
-            data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+            data-whatsapp-text="Olá, sou de {estado} e gostaria de fazer orçamento de locação de andaimes."
           >
             Solicitar Orçamento Agora &rarr;
           </a>
@@ -1593,15 +1673,14 @@ fbq('track', 'PageView');
 
 </main>
 
-<!-- Floating WhatsApp button, wired to the same handleOrcamentoClick
-     function and the same Meta Pixel Lead event as the other
-     Solicitar Orçamento buttons, not a new event. -->
+<!-- The floating commercial WhatsApp button also opens the quote form. -->
 <a
   href="#"
   class="whatsapp-float"
   id="cta-orcamento-float"
+  aria-haspopup="dialog" aria-controls="orcamento-dialog"
   data-whatsapp-number="5571991576357"
-  data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+  data-whatsapp-text="Olá, sou de {estado} e gostaria de fazer orçamento de locação de andaimes."
   aria-label="Solicitar orçamento pelo WhatsApp"
 >
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
@@ -1664,15 +1743,14 @@ fbq('track', 'PageView');
         </div>
         <ul class="footer-links">
           <li>
-            <!-- Wired to the same handleOrcamentoClick function and the same
-                 Meta Pixel Lead event as the other Solicitar
-                 Orçamento buttons, not a new event. -->
+            <!-- Opens the shared quote form. -->
             <a
               href="#"
               class="footer-link"
               id="cta-orcamento-footer"
+              aria-haspopup="dialog" aria-controls="orcamento-dialog"
               data-whatsapp-number="5571991576357"
-              data-whatsapp-text="Olá, quero fazer uma cotação de locação de andaime multidirecional."
+              data-whatsapp-text="Olá, sou de {estado} e gostaria de fazer orçamento de locação de andaimes."
             >
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -1700,6 +1778,24 @@ fbq('track', 'PageView');
   </div>
 </footer>
 
+<dialog class="quote-dialog" id="orcamento-dialog" aria-labelledby="orcamento-title">
+  <div class="quote-dialog-header">
+    <h2 class="quote-dialog-title" id="orcamento-title">Solicitar orçamento</h2>
+    <button type="button" class="quote-close" id="orcamento-close" aria-label="Fechar formulário" title="Fechar formulário">&times;</button>
+  </div>
+  <form class="quote-form" id="orcamento-form">
+    <div class="quote-field">
+      <label for="orcamento-nome">Nome</label>
+      <input id="orcamento-nome" name="nome" type="text" autocomplete="name" placeholder="Seu nome" minlength="2" maxlength="80" required autofocus>
+    </div>
+    <div class="quote-field">
+      <label for="orcamento-estado">Estado</label>
+      <input id="orcamento-estado" name="estado" type="text" autocomplete="address-level1" autocapitalize="words" placeholder="Seu estado" minlength="2" maxlength="40" required>
+    </div>
+    <button type="submit" class="btn-primary quote-submit" id="orcamento-submit">Continuar no WhatsApp</button>
+  </form>
+</dialog>
+
 <script>
   (function () {
     'use strict';
@@ -1709,25 +1805,78 @@ fbq('track', 'PageView');
       window.open(url, '_blank', 'noopener');
     }
 
-    // Shared by #cta-orcamento (hero), #cta-orcamento-header (nav),
-    // #cta-orcamento-final (closing CTA card), #cta-orcamento-footer
-    // (footer), and #cta-orcamento-float (floating button), each reads
-    // its own data attributes, but they all run through this one
-    // function, so there is only one Lead event definition,
-    // not five.
+    var quoteDialog = document.getElementById('orcamento-dialog');
+    var quoteForm = document.getElementById('orcamento-form');
+    var nameInput = document.getElementById('orcamento-nome');
+    var stateInput = document.getElementById('orcamento-estado');
+    var submitButton = document.getElementById('orcamento-submit');
+    var activeSalesLink = null;
+    var hasStartedQuote = false;
+
+    // Count the first real input once per page, without sending field values to Meta.
+    function trackQuoteFormStart() {
+      if (!activeSalesLink || hasStartedQuote ||
+          (!nameInput.value.trim() && !stateInput.value.trim())) { return; }
+      if (typeof fbq === 'function') {
+        fbq('trackCustom', 'InicioFormulario');
+        hasStartedQuote = true;
+      }
+    }
+
     function handleOrcamentoClick(event) {
       event.preventDefault();
+      activeSalesLink = event.currentTarget;
+      quoteDialog.showModal();
+      document.body.classList.add('quote-form-open');
+    }
 
-      // Queue the click before opening WhatsApp, even while the Pixel SDK loads.
+    quoteForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (!activeSalesLink || submitButton.disabled) { return; }
+
+      var name = nameInput.value.trim();
+      var state = stateInput.value.trim();
+      nameInput.setCustomValidity(name.length >= 2 ? '' : 'Informe seu nome.');
+      stateInput.setCustomValidity(state.length >= 2 ? '' : 'Informe seu estado.');
+      if (!quoteForm.reportValidity()) { return; }
+
+      // Autofill can populate both fields without an input event.
+      trackQuoteFormStart();
+
+      var number = activeSalesLink.getAttribute('data-whatsapp-number');
+      var text = activeSalesLink.getAttribute('data-whatsapp-text').replace('{estado}', function () { return state; }) +
+        '\n\nNome: ' + name;
+      submitButton.disabled = true;
+
+      // Personal details go only in the WhatsApp message, not in the Pixel event.
       if (typeof fbq === 'function') {
         fbq('track', 'Lead');
       }
 
-      openWhatsApp(
-        event.currentTarget.getAttribute('data-whatsapp-number'),
-        event.currentTarget.getAttribute('data-whatsapp-text')
-      );
-    }
+      openWhatsApp(number, text);
+      quoteDialog.close();
+    });
+
+    nameInput.addEventListener('input', function () {
+      nameInput.setCustomValidity('');
+      trackQuoteFormStart();
+    });
+    stateInput.addEventListener('input', function () {
+      stateInput.setCustomValidity('');
+      trackQuoteFormStart();
+    });
+    document.getElementById('orcamento-close').addEventListener('click', function () { quoteDialog.close(); });
+    quoteDialog.addEventListener('close', function () {
+      activeSalesLink = null;
+      submitButton.disabled = false;
+      document.body.classList.remove('quote-form-open');
+    });
+    quoteDialog.addEventListener('click', function (event) {
+      if (event.target !== quoteDialog) { return; }
+      var bounds = quoteDialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right ||
+          event.clientY < bounds.top || event.clientY > bounds.bottom) { quoteDialog.close(); }
+    });
 
     // Shared by #link-rh (hero) and #link-rh-header (nav). Intentionally
     // fires no pixel event, business-lead tracking should never count

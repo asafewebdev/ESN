@@ -878,6 +878,12 @@ fbq('track', 'PageView');
     scroll-margin-top: 84px; /* offsets the sticky header when jumped to via nav anchor */
   }
 
+  #estoque-proprio,
+  #sistema-layher,
+  #solicitar-orcamento {
+    scroll-margin-top: 84px;
+  }
+
   .garantias-header {
     margin-bottom: var(--space-7);
   }
@@ -1586,7 +1592,7 @@ fbq('track', 'PageView');
       </article>
 
       <!-- Card 02 -->
-      <article class="guarantee-card reveal">
+      <article id="sistema-layher" class="guarantee-card reveal">
         <div class="card-content">
           <span class="pill-badge">02</span>
           <h3 class="card-title">Material Certificado, Não Genérico</h3>
@@ -1620,7 +1626,7 @@ fbq('track', 'PageView');
       </article>
 
       <!-- Card 03 -->
-      <article class="guarantee-card reveal">
+      <article id="estoque-proprio" class="guarantee-card reveal">
         <div class="card-content">
           <span class="pill-badge">03</span>
           <h3 class="card-title">Estoque Próprio = Garantia de Entrega</h3>
@@ -1657,7 +1663,7 @@ fbq('track', 'PageView');
   <!-- ============================================
        FINAL CTA
        ============================================ -->
-  <section class="final-cta">
+  <section id="solicitar-orcamento" class="final-cta">
     <div class="container">
       <div class="final-cta-card reveal">
         <div class="final-cta-content">
@@ -1830,7 +1836,9 @@ fbq('track', 'PageView');
     var stateInput = document.getElementById('orcamento-estado');
     var submitButton = document.getElementById('orcamento-submit');
     var activeSalesLink = null;
+    var activeQuoteSource = null;
     var hasStartedQuote = false;
+    var quoteFragment = '#solicitar-orcamento';
 
     // Count the first real input once per page, without sending field values to Meta.
     function trackQuoteFormStart() {
@@ -1842,11 +1850,28 @@ fbq('track', 'PageView');
       }
     }
 
-    function handleOrcamentoClick(event) {
-      event.preventDefault();
-      activeSalesLink = event.currentTarget;
+    function openQuoteForm(salesLink, source) {
+      if (!salesLink || quoteDialog.open) { return; }
+      activeSalesLink = salesLink;
+      activeQuoteSource = source;
+      submitButton.disabled = false;
       quoteDialog.showModal();
       document.body.classList.add('quote-form-open');
+    }
+
+    function handleOrcamentoClick(event) {
+      event.preventDefault();
+      openQuoteForm(event.currentTarget, event.currentTarget.id);
+    }
+
+    function syncQuoteFragment() {
+      if (window.location.hash === quoteFragment) {
+        openQuoteForm(document.getElementById('cta-orcamento-final'), 'sitelink-google-ads');
+        // This only identifies the entry point; campaign attribution is unchanged.
+        if (quoteDialog.open) { activeQuoteSource = 'sitelink-google-ads'; }
+      } else if (activeQuoteSource === 'sitelink-google-ads' && quoteDialog.open) {
+        quoteDialog.close();
+      }
     }
 
     quoteForm.addEventListener('submit', function (event) {
@@ -1886,9 +1911,18 @@ fbq('track', 'PageView');
     });
     document.getElementById('orcamento-close').addEventListener('click', function () { quoteDialog.close(); });
     quoteDialog.addEventListener('close', function () {
+      // Ignore a queued close event if a newer navigation already reopened it.
+      if (quoteDialog.open) { return; }
+      var openedFromSitelink = activeQuoteSource === 'sitelink-google-ads';
       activeSalesLink = null;
+      activeQuoteSource = null;
       submitButton.disabled = false;
       document.body.classList.remove('quote-form-open');
+      if (openedFromSitelink && window.location.hash === quoteFragment) {
+        var url = new URL(window.location.href);
+        url.hash = '';
+        window.history.replaceState(window.history.state, '', url.href);
+      }
     });
     quoteDialog.addEventListener('click', function (event) {
       if (event.target !== quoteDialog) { return; }
@@ -1921,6 +1955,9 @@ fbq('track', 'PageView');
         el.addEventListener('click', handleRecruitingLinkClick);
       }
     });
+
+    window.addEventListener('hashchange', syncQuoteFragment);
+    syncQuoteFragment();
   })();
 </script>
 

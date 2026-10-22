@@ -33,6 +33,15 @@
 }
 </script>
 
+<!-- Google tag (gtag.js): ESN Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18523628768"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18523628768');
+</script>
+
 <!-- Meta Pixel: ESN -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -1802,6 +1811,16 @@ fbq('track', 'PageView');
 
     function openWhatsApp(number, text) {
       var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(text);
+      if (number === '5571991576357' && typeof window.gtag === 'function') {
+        try {
+          window.gtag('event', 'conversion', {
+            send_to: 'AW-18523628768/fAdDCKuo_qQdEODJ4IBF'
+          });
+        } catch (error) {
+          // Tracking failures must never prevent the WhatsApp handoff.
+        }
+      }
+      // Keep the new tab synchronous; this page stays open to send the event.
       window.open(url, '_blank', 'noopener');
     }
 
